@@ -23,20 +23,21 @@ int main(int argc, char* argv[]) {} // With arguments version
 // === Variables ===
 // Decalaration
 int a; // single decaration
-int b, c; // multiple declaration
+int b, c; // multiple declaration of same type
 
 // Primitive Types
-int int_var; // equivalent to signed int, long, long int, signed long, signed long int
-unsigned int unsigned_int_var; // equivalent to unsigned long, unsigned long int
-short short_var; // equivalent to signed short, signed short int, short int
-unsigned short unsigned_short_var; // equivalent to unsigned short int, unsigned short
-long long int long_long_int_var; // equivalent to signed long long, signed long long int, long long
-unsigned long long int unsigned_long_long_int_var; // equivalent to unsigned long long, unsigned long long  
-float float_var; 
-double double_var; 
-long double long_double_var; 
-bool bool_var; 
-char char_var; // 
+char char_var; // 8bit equivalent to signed char
+unsigned char unsigned_char_var; // 8bit equivalent to unsigned char
+short short_var; // 16bit equivalent to signed short, signed short int, short int
+unsigned short unsigned_short_var; // 16bit equivalent to unsigned short int, unsigned short
+int int_var; // 32bit equivalent to signed int, long, long int, signed long, signed long int
+unsigned int unsigned_int_var; // 32bit equivalent to unsigned long, unsigned long int
+long long int long_long_int_var; // 64bit equivalent to signed long long, signed long long int, long long
+unsigned long long int unsigned_long_long_int_var; // 64bit equivalent to unsigned long long, unsigned long long  
+float float_var; // 32bit 
+double double_var; // 64bit 
+long double long_double_var; // 128bit or 80bit depending on platform 
+bool bool_var; // 8bit 
 wchar_t wchar_var; // for wide characters, variable length depending on platform
 char16_t char16_var; // for UTF-16 characters
 char32_t char32_var; // for UTF-32 characters
