@@ -20,14 +20,6 @@
 			1. lvalue reference
 			1. rvalue reference
 		1. user defined types
-	1. literals
-		1. integer literals
-		1. floating point literals
-		1. character literals
-		1. string literals
-		1. boolean literals
-		1. null pointer literals
-		1. true false literals
 	1. const
 	1. volatile
 	1. extern
@@ -42,6 +34,14 @@
 	1. template variables
 	1. pointer to member
 	1. pointer to member function
+1. literals
+	1. integer literals
+	1. floating point literals
+	1. character literals
+	1. string literals
+	1. boolean literals
+	1. null pointer literals
+	1. true false literals
 1. initialization
 	1. default initialization
 	1. parenthesized initialization (direct initialization)
