@@ -3,7 +3,23 @@
 	1. multi line comments
 1. Main function
 1. Variables
-	1. variable declaration
+	1. declaration
+		1. Primitive types
+			1. integral 
+				1. signed
+				1. unsigned
+			1. floating point 
+			1. boolean 
+			1. character 
+				1. wchar_t 
+				1. char16_t
+				1. char32_t
+			1. void 
+			1. pointer 
+			1. array 
+			1. lvalue reference
+			1. rvalue reference
+		1. user defined types
 	1. literals
 		1. integer literals
 		1. floating point literals
@@ -75,18 +91,6 @@
 		1. static variables
 	1. function call
 1. Types
-	1. Primitive types
-		1. integral 
-			1. signed
-			1. unsigned
-		1. floating point 
-		1. boolean 
-		1. character 
-		1. void 
-		1. pointer 
-		1. array 
-		1. lvalue reference
-		1. rvalue reference
 	1. class and struct
 		1. class declaration
 			1. alignas specifier
