@@ -1,5 +1,6 @@
 #include <cstddef> // for std::nullptr_t
 #include <stdfloat> // for std::float16_t, std::float32_t, std::float64_t, std::float128_t, std::bfloat16_t
+#include <typeinfo> // for std::type_info
 struct MyStruct { 
 	int x, y;
 	void method() {}
@@ -128,3 +129,32 @@ int uniform_init{20}; // uniform initialization, no narrowing conversion allowed
 int uniform_copy_init = int{30}; // uniform copy initialization, same as uniform initialization
 int aggregate_init = {40}; // aggregate initialization, same as uniform initialization, braces can be empty
 MyStruct designated_init = {.x = 1, .y = 2}; // designated initialization, doesn't require all members, order must match type definition
+
+
+// === Operators ===
+// all operators except comparison operators have a compound version, +=, <<=, ...
+
+// Arithmetic Operators
+int result = 1 + 2, 1 - 2, 1 * 2, 1 / 2, 1 / 2., 1 % 2; 
+int var = 10, var++, ++var, var--, --var; 
+int negation = -var;
+
+// Comparison Operators
+bool result = 1 == 2, 1 != 2, 1 < 2, 1 > 2, 1 <= 2, 1 >= 2, 1 <=> 2;
+
+// Logical Operators
+bool result = true && false, true and false, true || false, true or false, !true, not true; 
+
+// Bitwise Operators
+int result = 1 & 2, 1 bitand 2, 1 | 2, 1 bitor 2, 1 ^ 2, 1 xor 2, ~1, compl 1, 1 << 2, 1 >> 2;
+
+int a = 3, a = 4; // Assignment operator
+MyStruct s, s.x, s.*ptr_to_member; // member access and pointer to member operator
+MyStruct* ptr = &s, ptr->x, ptr->*ptr_to_member; // pointer member access and pointer to member operator
+*ptr; // dereference operator
+&s; // address-of operator
+int ternary_result = 1 < 2 ? 3 : 4; // ternary operator
+int comma_result = 1, 3; // comma operator, was using it all along ;)
+int sizeof_result = sizeof(int); // sizeof operator, there is also sizeof... for parameter packs
+int alignof_result = alignof(int); // alignof operator, returns alignment of type
+const std::type_info& typeid_result = typeid(int), typeid(1 + 2); // typeid operator, returns

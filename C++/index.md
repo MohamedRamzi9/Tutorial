@@ -58,15 +58,16 @@
 	1. bitwise 
 	1. assignment 
 	1. member access 
+	1. pointer to member access
 	1. deference 
 	1. address 
-	1. pointer to member access
 	1. ternary 
 	1. comma 
-	1. sizeof 
+	1. sizeof sizeof...
 	1. alignof 
-	1. new 
-	1. delete 
+	1. typeid
+	1. new new[] 
+	1. delete delete[]
 	1. noexcept
 1. Functions
 	1. Function declaration
