@@ -1,4 +1,5 @@
 #include <cstddef> // for std::nullptr_t
+#include <stdfloat> // for std::float16_t, std::float32_t, std::float64_t, std::float128_t, std::bfloat16_t
 struct MyStruct { 
 	int x, y;
 	void method() {}
@@ -77,3 +78,44 @@ char32_t utf32_char = U'😂', U'\U0001F602';
 wchar_t wide_char = L'あ';
 char16_t octal_char = u'\2', u'\42', u'\377', u'\o{21636621}'; // the maximum value is 377 with no \o{}
 char32_t hexadecimal_char = U'\x1F6017A8'; // or any number of hex digits
+
+// Integral Literals
+int decimal_int = 123, 123l, 123L; 
+unsigned int unsigned_decimal_int = 123u, 123U, 123ul, 123UL; 
+long long int long_decimal_int = 1234567890123456789ll, 1234567890123456789LL; 
+unsigned long long int unsigned_long_decimal_int = 1234567890123456789ull, 1234567890123456789ULL; 
+long long int size_t_var = 1234567890z; 
+std::size_t unsigned_size_t_var = 1234567890uz; 
+
+int octal_int = 0123; 
+int hexadecimal_int = 0x1bFAe, 0X1bFAe; 
+int binary_int = 0b101010, 0B101001; 
+
+int with_sign_int = -123; 
+int separated_decimal_int = 1'2323'124;
+
+// Floating Point Literals
+double double_var = 1.23;
+float float_var = 1.23f, 1.23F;
+long double long_double_var = 1.23l, 1.23L; 
+std::float16_t float16_var = 1.23f16, 1.23F16; 
+std::float32_t float32_var = 1.23f32, 1.23F32;
+std::float64_t float64_var = 1.23f64, 1.23F64;
+std::float128_t float128_var = 1.23f128, 1.23F128;
+std::bfloat16_t bfloat16_var = 1.23bf16, 1.23Bf16;
+
+double double_literal = .3f, 3.;
+double double_scientific_literal = 3.e2, 3E2, 3e2, 3e+2, 3.e-2;
+double binary_exponent = 0x3.2p2, 0x3.2P2; 
+
+// String literals
+const char* string_literal = "asc \n \t \t \r \v \f \a \b \\a \0";
+const char* raw_string_literal = R"seq(some text \t \a)seq"; // seq can be anything even empty
+
+// Boolean literals
+bool bool_literal = true, false;
+
+// Null pointer literal
+std::nullptr_t null_ptr_literal = nullptr; // can be used with any pointer type
+
+
