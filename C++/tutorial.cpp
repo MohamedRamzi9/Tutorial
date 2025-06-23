@@ -66,3 +66,14 @@ auto&& [x, y] = my_struct_var; // structured binding to an rvalue of my_struct_v
 template <typename T> int zero_var = T(0); // template variable
 int MyStruct::* ptr_to_member = &MyStruct::x; // pointer to member x of MyStruct
 void (MyStruct::* ptr_to_member_function)() = &MyStruct::method; // pointer to member function method of MyStruct
+
+
+// === Literals ===
+char ascii_char = 'a'; 
+char8_t utf8_char = u8'a';
+const char8_t* emoji = u8"😊", u8"\U0001F393", u8"\u1A29";
+char16_t utf16_char = u'Ω', u'\u03A9'; 
+char32_t utf32_char = U'😂', U'\U0001F602';
+wchar_t wide_char = L'あ';
+char16_t octal_char = u'\2', u'\42', u'\377', u'\o{21636621}'; // the maximum value is 377 with no \o{}
+char32_t hexadecimal_char = U'\x1F6017A8'; // or any number of hex digits
