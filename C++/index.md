@@ -43,13 +43,12 @@
 	1. null pointer literals
 1. initialization
 	1. default initialization
-	1. parenthesized initialization (direct initialization)
-	1. assignement initialization (copy initialization)
-	1. braced initialization (uniform initialization) 
-	1. braces assignement initialization (list initialization)
-	1. aggregate initialization
+	1. direct initialization
 	1. value initialization
-	1. default member initialization
+	1. copy initialization
+	1. uniform initialization 
+	1. uniform copy initialization
+	1. aggregate initialization
 	1. designated initialization
 1. Operators
 	1. arithmetic 

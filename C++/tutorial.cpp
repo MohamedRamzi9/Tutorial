@@ -119,3 +119,12 @@ bool bool_literal = true, false;
 std::nullptr_t null_ptr_literal = nullptr; // can be used with any pointer type
 
 
+// === Iinitialization ===
+int default_init; // default initialization, if type is class, default constructor is called instead
+int direct_init(20); // direct initialization, constructor is called, paratheses can not be empty
+int copy_init = 10; // value initialization, compiler will always optimize it to direct initialization
+int direct_copy_init = int(30); // copy initialization, same as direct initialization, parentheses can be empty
+int uniform_init{20}; // uniform initialization, no narrowing conversion allowed, braces can be empty
+int uniform_copy_init = int{30}; // uniform copy initialization, same as uniform initialization
+int aggregate_init = {40}; // aggregate initialization, same as uniform initialization, braces can be empty
+MyStruct designated_init = {.x = 1, .y = 2}; // designated initialization, doesn't require all members, order must match type definition
