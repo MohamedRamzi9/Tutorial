@@ -158,3 +158,25 @@ int comma_result = 1, 3; // comma operator, was using it all along ;)
 int sizeof_result = sizeof(int); // sizeof operator, there is also sizeof... for parameter packs
 int alignof_result = alignof(int); // alignof operator, returns alignment of type
 const std::type_info& typeid_result = typeid(int), typeid(1 + 2); // typeid operator, returns
+
+// New and Delete, needs more refinement 
+char* char_ptr = new char; // with no arguments parentheses are optional
+char* char_ptr = ::new char; // explicitly call the global new operator
+char* char_ptr = new char('a'); //
+char* char_ptr = new (char_ptr)char;
+char* char_array_ptr[] = new (char_ptr)(char[]){1, 2, 3};
+delete char_ptr; // unallocate the variable
+delete[] char_array_ptr; // unallocate the array
+
+bool does_throw = noexcept(1 + 2); // noexcept opertor
+
+// === Functions ===
+void function_declaration(); // delcaration with no definition;
+auto auto_return_type() { return 1; }; // return type deduced from return statement
+auto trailing_return_type() -> int; // trailing return type
+void parameters(int a, auto x); // regular parameter and auto parameter
+void paramter_pack(auto... pack) { // paramter pack and pack indexing
+	auto first = pack...[0];
+	auto last = pack...[sizeof...(pack) - 1]; 
+}  
+

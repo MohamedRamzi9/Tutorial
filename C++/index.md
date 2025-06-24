@@ -66,7 +66,7 @@
 	1. sizeof sizeof...
 	1. alignof 
 	1. typeid
-	1. new new[] 
+	1. new, placement new,
 	1. delete delete[]
 	1. noexcept
 1. Functions
