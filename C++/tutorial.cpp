@@ -6,6 +6,9 @@ struct MyStruct {
 	void method() {}
 };
 int function(int a);
+template <class s> concept always_true = true; 
+
+
 
 
 // ========================================
@@ -168,10 +171,10 @@ char* char_array_ptr[] = new (char_ptr)(char[]){1, 2, 3};
 delete char_ptr; // unallocate the variable
 delete[] char_array_ptr; // unallocate the array
 
-bool does_throw = noexcept(1 + 2); // noexcept opertor
+bool does_throw = noexcept(1 + 2); // noexcept operator
 
 // === Functions ===
-void function_declaration(); // delcaration with no definition;
+void function_declaration(); // declaration with no definition;
 auto auto_return_type() { return 1; }; // return type deduced from return statement
 auto trailing_return_type() -> int; // trailing return type
 void parameters(int a, auto x); // regular parameter and auto parameter
@@ -179,4 +182,49 @@ void paramter_pack(auto... pack) { // paramter pack and pack indexing
 	auto first = pack...[0];
 	auto last = pack...[sizeof...(pack) - 1]; 
 }  
+void default_argument(int a = 10); // default argument, must be at the end of the parameter list
+void auto_concept_argument(always_true auto x); // auto argument with concept which must evaluate to true with the type of the argument
+void noexcept_function() noexcept; // noexcept specifier, function will not throw exceptions
+void noexcept_function() noexcept(true); // noexcept with expression, function may throw if expression is false
+void noexcept_noexcept_function() noexcept(noexcept(1 + 2)); // inner noexcept is the operator, outer one is the specifier
+constexpr void constexpr_function(); // constexpr function, may be evaluated at compile or runtime, depends on context
+consteval void consteval_function(); // consteval function, must be evaluated at compile time
+inline void inline_function(); // inline function, suggests to the compiler to inline the function, also allows same definition in different translation units
+static void static_function(); // static function, has internal linkage
+void overloaded_function(int a); int overloaded_function(double a); // overloaded function, same name but different parameters and return type
 
+void function_definition() { // the body of the function goes here inside the curly braces
+	// function body
+}
+void static_variable_function() { // static variables in functions, retain their value between calls
+	static int static_var = 0;
+}
+
+
+// === Types ===
+// Classes
+class my_class; // class declaration, you can have pointer to incomplete class
+struct my_struct; // same as class but default access specifier is public whereas private for class
+class my_class alignas(16); // class with alignment requirement, can be any power of 2
+class my_class final; // final class, cannot be inherited from
+
+class my_class { // class definition, goes inside the curly braces
+private: // private access specifier, members are accessible only from inside the class
+	int x; // member variable declaration, 
+public: // public access specifier, members are accessible from outside the class
+	static int y; // static member variable, 
+protected: // protected access specifier, members are accessible from inside the class and derived classes
+	int get_x(); // member function declaration
+	int this_function() { // member function definition, can access private members of the class
+		this->x = 10; // this pointer refers to the current object
+		return x; // this is optional
+	}
+	int this_arg_function(this auto&& object) {
+		return object.x; // can access private member x of the object
+	}
+	static void static_function(); // static member function, can't access non-static members
+};
+int my_class::y = 0; // static member variable definition
+int my_class::get_x() { // member function definition outside the class
+	return x; // can access everything inside the class
+}

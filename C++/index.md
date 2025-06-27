@@ -78,14 +78,16 @@
 		1. template arguments
 			1. auto arguments
 			1. parameter pack
-			1. pack indexing
-		1. noexcept specifier
-		1. constexpr specifier
-		1. inline specifier
-		1. consteval specifier
-		1. function overloading
+				1. pack indexing
 		1. default arguments
 		1. concept auto
+		1. noexcept specifier
+			1. noexcept operator
+		1. constexpr specifier
+		1. consteval specifier
+		1. inline specifier
+		1. static specifier
+		1. function overloading
 	1. function definition
 		1. static variables
 	1. function call
@@ -95,15 +97,15 @@
 			1. alignas specifier
 			1. final specifier
 		1. class definition
+			1. access specifiers
 			1. member variables
 			1. static variables
+				1. static variables defintion
 			1. member functions
 				1. explicit this argument
+				1. external function declaration 
 			1. static functions
-				1. static call operator
-				1. static subscript operator
-			1. access specifiers
-			1. constructors
+			1. constructors 🟢🟢🟢
 				1. explicit constructor
 				1. default constructor
 				1. copy constructor
@@ -114,9 +116,11 @@
 				1. arithmetic operators
 				1. comparison operators
 				1. logical operators
-				1. call operators
-				1. subscript operators
 				1. conversion operators
+				1. call operator
+				1. subscript operator
+				1. static call operator
+				1. static subscript operator
 			1. inheritance
 				1. multiple inheritance
 				1. virtual inheritance

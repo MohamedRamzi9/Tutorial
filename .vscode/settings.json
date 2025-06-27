@@ -1,10 +1,11 @@
 {
 	"files.associations": {
-		"*.sqlbook": "sql",
-		"*.ndjson": "jsonl",
 		"*.dbclient-js": "javascript",
 		"*.txt": "plaintext",
 		"General structure": "plaintext",
-		"format": "cpp"
+		"*.sqlbook": "sql",
+		"*.ndjson": "jsonl",
+		"format": "cpp",
+		"cstddef": "cpp"
 	}
 }
