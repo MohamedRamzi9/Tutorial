@@ -1,10 +1,12 @@
 
 void func() {}
-struct s {
-	static int opeartor()() {
+class MyClass final {
+	int operator~() const {
 		return 0;
 	}
 };
+
 int main() {
-	const char8_t* emoji = u8"😊";
+	int x = 10;
+	x &= 5; 
 }

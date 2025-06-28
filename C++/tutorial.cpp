@@ -4,7 +4,7 @@
 struct MyStruct { 
 	int x, y;
 	void method() {}
-};
+} object, *object_ptr;
 int function(int a);
 template <class s> concept always_true = true; 
 
@@ -135,27 +135,60 @@ MyStruct designated_init = {.x = 1, .y = 2}; // designated initialization, doesn
 
 
 // === Operators ===
-// all operators except comparison operators have a compound version, +=, <<=, ...
-
 // Arithmetic Operators
-int result = 1 + 2, 1 - 2, 1 * 2, 1 / 2, 1 / 2., 1 % 2; 
-int var = 10, var++, ++var, var--, --var; 
-int negation = -var;
+int result = 1 + 2; // addition
+result += 3; // compound addition
+int result = 1 - 2; // subtraction
+result -= 3; // compound subtraction
+int result = 1 * 2; // multiplication
+result *= 3; // compound multiplication
+int result = 1 / 2; // floor division
+result /= 3; // compound floor division
+int result = 1 / 2.; // floating point division, need at least one operand to be a floating point type
+result /= 3.; // compound division
+int result = 1 % 2; // modulus
+result %= 3; // compound modulus
+result++; // postfix increment, changes the value after usage
+result--; // postfix decrement, changes the value after usage
+++result; // prefix increment, changes the value before usage
+--result; // prefix decrement, changes the value before usage
+int result = -result; // unary negation, changes the sign of the value
 
 // Comparison Operators
-bool result = 1 == 2, 1 != 2, 1 < 2, 1 > 2, 1 <= 2, 1 >= 2, 1 <=> 2;
+bool result = 1 == 2; // equality
+bool result = 1 != 2; // inequality
+bool result = 1 < 2; // less than
+bool result = 1 > 2; // greater than
+bool result = 1 <= 2; // less than or equal to
+bool result = 1 >= 2; // greater than or equal to
+auto result = 1 <=> 2; // three way comparison
 
 // Logical Operators
-bool result = true && false, true and false, true || false, true or false, !true, not true; 
+bool result = true && false, true and false; // logical AND
+bool result = true || false, true or false; // logical OR
+bool result = !true, not true; // logical NOT
 
 // Bitwise Operators
-int result = 1 & 2, 1 bitand 2, 1 | 2, 1 bitor 2, 1 ^ 2, 1 xor 2, ~1, compl 1, 1 << 2, 1 >> 2;
+int result = 1 & 2, 1 bitand 2; // bitwise AND
+result &= 3; // compound bitwise AND
+int result = 1 | 2, 1 bitor 2; // bitwise OR
+result |= 3; // compound bitwise OR
+int result = 1 ^ 2, 1 xor 2; // bitwise XOR
+result ^= 3; // compound bitwise XOR
+int result = ~1, compl 1; // bitwise NOT
+int result = 1 << 2; // left shift
+result <<= 3; // compound left shift
+int result = 1 >> 2; // right shift
+result >>= 3; // compound right shift
 
 int a = 3, a = 4; // Assignment operator
-MyStruct s, s.x, s.*ptr_to_member; // member access and pointer to member operator
-MyStruct* ptr = &s, ptr->x, ptr->*ptr_to_member; // pointer member access and pointer to member operator
-*ptr; // dereference operator
-&s; // address-of operator
+object.x; // member access operator
+object.*ptr_to_member; // pointer to member access operator
+object_ptr->x; // pointer member access operator
+object_ptr->*ptr_to_member; // pointer to pointer member access operator
+*object_ptr; // dereference operator
+&object; // address-of operator
+object[5]; // subscript operator
 int ternary_result = 1 < 2 ? 3 : 4; // ternary operator
 int comma_result = 1, 3; // comma operator, was using it all along ;)
 int sizeof_result = sizeof(int); // sizeof operator, there is also sizeof... for parameter packs
@@ -192,6 +225,7 @@ consteval void consteval_function(); // consteval function, must be evaluated at
 inline void inline_function(); // inline function, suggests to the compiler to inline the function, also allows same definition in different translation units
 static void static_function(); // static function, has internal linkage
 void overloaded_function(int a); int overloaded_function(double a); // overloaded function, same name but different parameters and return type
+void deleted_function() = delete; // deleted function, this overload cannot be called
 
 void function_definition() { // the body of the function goes here inside the curly braces
 	// function body
@@ -205,12 +239,13 @@ void static_variable_function() { // static variables in functions, retain their
 // Classes
 class my_class; // class declaration, you can have pointer to incomplete class
 struct my_struct; // same as class but default access specifier is public whereas private for class
-class my_class alignas(16); // class with alignment requirement, can be any power of 2
-class my_class final; // final class, cannot be inherited from
+class aligned_class alignas(16); // class with alignment requirement, can be any power of 2
+class final_class final {}; // final class, cannot be inherited from
 
 class my_class { // class definition, goes inside the curly braces
 private: // private access specifier, members are accessible only from inside the class
 	int x; // member variable declaration, 
+	mutable int mutable_x; // mutable member variable, can be modified even in const member functions
 public: // public access specifier, members are accessible from outside the class
 	static int y; // static member variable, 
 protected: // protected access specifier, members are accessible from inside the class and derived classes
@@ -223,6 +258,25 @@ protected: // protected access specifier, members are accessible from inside the
 		return object.x; // can access private member x of the object
 	}
 	static void static_function(); // static member function, can't access non-static members
+	virtual void virtual_function(); // virtual member function, can be overridden in derived classes
+	virtual void pure_virtual_function() = 0; // pure virtual member function, makes the class abstract, cannot be instantiated
+	void const_function() const; // const member function, can be called on const objects and modify non-mutable members of the class
+	void volatile_function() volatile; // volatile member function, can be called on volatile objects
+
+	my_class(); // default constructor declaration
+	my_class(int a); // constructor declaration with parameter
+	my_class(int a) : x(a) { // constructor definition with member initializer list
+		this->x = a; // at this point, x was already initialized in the member initializer list
+	}
+	explicit my_class(); // explicit constructor, prevents implicit conversions
+	my_class(const my_class&); // copy constructor declaration
+	my_class(my_class&&); // move constructor declaration
+	my_class() : my_class(0) {} // delegating constructor, member initializer list isn't allowed here
+	~my_class(); // destructor declaration
+
+	// Operators Overloading
+	int operator+(const my_class& other); // overload the + operator, same for +=, -, -=, *, *=, /, /=, %, %=, &, &=, |, |=, ^, ^=, ~, ~=, <<, <<=, >>, >>=, &&, ||, !, ==, !=, <, >, <=, >=, <=>
+
 };
 int my_class::y = 0; // static member variable definition
 int my_class::get_x() { // member function definition outside the class

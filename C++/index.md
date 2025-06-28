@@ -50,7 +50,7 @@
 	1. uniform copy initialization
 	1. aggregate initialization
 	1. designated initialization
-1. Operators
+1. Operators 
 	1. arithmetic 
 	1. comparison 
 		1. three way comparison
@@ -88,6 +88,7 @@
 		1. inline specifier
 		1. static specifier
 		1. function overloading
+		1. deleted functions
 	1. function definition
 		1. static variables
 	1. function call
@@ -99,24 +100,31 @@
 		1. class definition
 			1. access specifiers
 			1. member variables
+				1. mutable variables
 			1. static variables
 				1. static variables defintion
 			1. member functions
 				1. explicit this argument
 				1. external function declaration 
-			1. static functions
-			1. constructors 🟢🟢🟢
+				1. virtual functions
+				1. pure virtual functions
+				1. const functions
+				1. volatile functions
+				1. static functions
+			1. constructors
 				1. explicit constructor
 				1. default constructor
 				1. copy constructor
 				1. move constructor
 				1. delegating constructor
 			1. destructors
-			1. operators overloading
+			1. operators overloading 
+				1. copy assignment operator
+				1. move assignment operator
 				1. arithmetic operators
 				1. comparison operators
 				1. logical operators
-				1. conversion operators
+				1. conversion operators🟢🟢🟢
 				1. call operator
 				1. subscript operator
 				1. static call operator
@@ -125,13 +133,9 @@
 				1. multiple inheritance
 				1. virtual inheritance
 				1. base class access specifiers
-			1. virtual functions
-			1. pure virtual functions
 			1. function overriding
-			1. deleted functions
 			1. default special functions
-			1. const functions
-			1. mutable variables
+			
 			1. nested class 
 			1. friend functions
 			1. friend class 
