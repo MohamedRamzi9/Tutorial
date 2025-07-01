@@ -7,6 +7,7 @@ struct MyStruct {
 } object, *object_ptr;
 int function(int a);
 template <class s> concept always_true = true; 
+namespace Namespace { int x; }
 
 
 
@@ -183,6 +184,7 @@ result >>= 3; // compound right shift
 
 int a = 3, a = 4; // Assignment operator
 object.x; // member access operator
+auto MyStruct::*ptr_to_member = &MyStruct::x; // member address operator
 object.*ptr_to_member; // pointer to member access operator
 object_ptr->x; // pointer member access operator
 object_ptr->*ptr_to_member; // pointer to pointer member access operator
@@ -198,13 +200,14 @@ const std::type_info& typeid_result = typeid(int), typeid(1 + 2); // typeid oper
 // New and Delete, needs more refinement 
 char* char_ptr = new char; // with no arguments parentheses are optional
 char* char_ptr = ::new char; // explicitly call the global new operator
-char* char_ptr = new char('a'); //
-char* char_ptr = new (char_ptr)char;
-char* char_array_ptr[] = new (char_ptr)(char[]){1, 2, 3};
+char* char_ptr = new char('a'); // direct initialization
+char* char_ptr = new (char_ptr)char; // placement new, constructs an object in the memory pointed by char_ptr
 delete char_ptr; // unallocate the variable
 delete[] char_array_ptr; // unallocate the array
 
 bool does_throw = noexcept(1 + 2); // noexcept operator
+
+int x = Namespace::x; // scope resolution operator, can be used on namespaces, classes, enums
 
 // === Functions ===
 void function_declaration(); // declaration with no definition;
@@ -242,7 +245,7 @@ struct my_struct; // same as class but default access specifier is public wherea
 class aligned_class alignas(16); // class with alignment requirement, can be any power of 2
 class final_class final {}; // final class, cannot be inherited from
 
-class my_class { // class definition, goes inside the curly braces
+class Base { // class definition, goes inside the curly braces
 private: // private access specifier, members are accessible only from inside the class
 	int x; // member variable declaration, 
 	mutable int mutable_x; // mutable member variable, can be modified even in const member functions
@@ -263,22 +266,94 @@ protected: // protected access specifier, members are accessible from inside the
 	void const_function() const; // const member function, can be called on const objects and modify non-mutable members of the class
 	void volatile_function() volatile; // volatile member function, can be called on volatile objects
 
-	my_class(); // default constructor declaration
-	my_class(int a); // constructor declaration with parameter
-	my_class(int a) : x(a) { // constructor definition with member initializer list
+	Base(); // default constructor declaration
+	Base(int a); // constructor declaration with parameter
+	Base(int a) : x(a) { // constructor definition with member initializer list
 		this->x = a; // at this point, x was already initialized in the member initializer list
 	}
-	explicit my_class(); // explicit constructor, prevents implicit conversions
-	my_class(const my_class&); // copy constructor declaration
-	my_class(my_class&&); // move constructor declaration
-	my_class() : my_class(0) {} // delegating constructor, member initializer list isn't allowed here
-	~my_class(); // destructor declaration
+	explicit Base(); // explicit constructor, prevents implicit conversions
+	Base(const Base&); // copy constructor declaration
+	Base(Base&&); // move constructor declaration
+	Base() : Base(0) {} // delegating constructor, member initializer list isn't allowed here
+	~Base(); // destructor declaration
 
-	// Operators Overloading
-	int operator+(const my_class& other); // overload the + operator, same for +=, -, -=, *, *=, /, /=, %, %=, &, &=, |, |=, ^, ^=, ~, ~=, <<, <<=, >>, >>=, &&, ||, !, ==, !=, <, >, <=, >=, <=>
+	// Operators Overloading, all can be explicit 
+	int operator+(const Base& other); // overload the + operator, same for +=, -, -=, *, *=, /, /=, %, %=, &, &=, |, |=, ^, ^=, <<, <<=, >>, >>=, &&, ||, !, ==, !=, <, >, <=, >=, <=>
+	int operator-(); // overload the unary - operator, same for ~, prefix ++, prefix --, 
+	int operator++(int); // overload the postfix ++ operator, same for postfix -- 
+	operator int(); // conversion operator, works for any type, must return a value of the type being converted to
+	void operator()(); // call operator, allows the object to be called like a function
+	void operator[](int index); // subscript operator, allows the object to be indexed like an array, can take any number of parameters
+	void operator*(); // dereference operator, doesn't take any parameters unlike multiplication operator
+	void operator->(); // pointer to member operator
+	static int operator()(int a); // static call operator
+	static int operator[](int index, int value); // static subscript operator
 
+	auto operator<=>(const Base& other) const = default; // if operator<=> is defaulted, or is defined and operator== is also defined the all comparison are automaticaly defined 
+	// if operator== is defined or defautled then operator!= is automatically defined
+
+	struct NestedClass {}; // nested class definition
+
+	friend void friend_function(Base& base); // friend function declaration, frind_function will have access to all Base private members
+	friend class NestedClass; // friend class declaration, all methods of NestedClass will have access to Base private members
 };
-int my_class::y = 0; // static member variable definition
-int my_class::get_x() { // member function definition outside the class
+int Base::y = 0; // static member variable definition
+int Base::get_x() { // member function definition outside the class
 	return x; // can access everything inside the class
 }
+Base::y = 10; // static member access
+
+// Inheritance
+class Derived1 : public Base { // public inheritance, attributes of Base are accessible as public in any class inheriting from Derived, same for protected and private
+	using Base::this_function; // using declaration, introduces a member of the base class into the derived class scope
+	int y;
+	Derived1() : Base(10), y(55) {} // calls base constructor, not delegating constructor, can use member initializer list
+	int get_x() { // function overriding, overrides the base class function
+		return Base::get_x() + y; // can call base class function using scope resolution operator
+	}
+	void pure_virtual_function() override {} // override specifier, allows compiler to throw an error if the function is not overriding a base class function	
+} object;
+object.Base::get_x(); // access Base class from object
+
+class A : virtual Base {}; class B : virtual Base {}; // virtual inheritance, to avoid having multiple base objects in diamond pattern
+ 
+class DerivedAll : A, B {}; // multiple inheritance, same as regular inheritance
+
+struct {  // anonymous struct, can be used without a name, members are accessible as if they were members of the enclosing scope
+	int x;
+	int y;
+};
+struct {
+	int a;
+	double b;
+} unamed_struct; // anonymous struct with variable declaration, members are only accessible through the objects of the struct
+
+union MyUnion { // union, can hold only one member at a time, size is the size of the largest member
+	int x; // member variable x
+	double z = 6.; // only one member can be initialized here
+	static float y; // static member variable y, doesn't contribute to the layout of the union
+	void method() {} // member function, can be called on the union object
+	static void static_method() {} // static member function, can be called without an object
+	MyUnion() {} // constructor
+	~MyUnion() {} // destructor
+	// and all class features can be used here except inheritance, virtual functions
+};
+static union {
+	int x; 
+	double z;
+};  // anonymous union, members are accessible as if they were members of the enclosing scope, only needs to be static if declared in global scope
+
+// Enum
+enum Enum; // forward declaration of enumiration
+enum Enum { // enumeration definition, all values can be accessed from enclosing scope
+	Default, // default enumerator, has value of the previous enumerator + 1, or 0 if it's the first enumerator
+	One = 1, // enumerator with explicit value
+} enum_instance = One; // enum instance 
+Enum::One; One; // accessing enumerator either via scope resolution operator or directly
+int x = Default; // non class enumerators can be explicitly converted to their base type
+Enum x = 4; // and can be initialized from base which corresponds to enumerator with that value
+enum { A, B, C, } Enum; // anonymous enum
+enum class ClassEnum { one, two, }; // enum class, values can only be accessed via scope resolution operator
+ClassEnum::one; // accessing class enum values
+using enum ClassEnum; // introduces all enumerators to the enclosing scope
+enum BaseTypeEnum : char {a, b}; // enum with base type, will use that type for the enumerators

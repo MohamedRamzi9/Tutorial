@@ -6,6 +6,8 @@
 		"*.sqlbook": "sql",
 		"*.ndjson": "jsonl",
 		"format": "cpp",
-		"cstddef": "cpp"
+		"cstddef": "cpp",
+		"string": "cpp",
+		"cassert": "cpp"
 	}
 }

@@ -34,6 +34,7 @@
 	1. template variables
 	1. pointer to member
 	1. pointer to member function
+	1. alignas ❌❌❌
 1. literals
 	1. character literals
 	1. integer literals
@@ -67,8 +68,10 @@
 	1. alignof 
 	1. typeid
 	1. new, placement new,
+		// finish the new section ❌❌❌
 	1. delete delete[]
 	1. noexcept
+	1. scope resolution operator
 1. Functions
 	1. Function declaration
 		1. return type
@@ -124,33 +127,36 @@
 				1. arithmetic operators
 				1. comparison operators
 				1. logical operators
-				1. conversion operators🟢🟢🟢
+				1. conversion operators
 				1. call operator
 				1. subscript operator
+				1. dereference operator
+				1. pointer to member operator
 				1. static call operator
 				1. static subscript operator
-			1. inheritance
-				1. multiple inheritance
-				1. virtual inheritance
-				1. base class access specifiers
-			1. function overriding
 			1. default special functions
-			
 			1. nested class 
+			1. inheritance
+				1. using declaration
+				1. base class access specifiers
+				1. function overriding
+				1. virtual inheritance
+				1. multiple inheritance
+				1. base class access from object
 			1. friend functions
 			1. friend class 
-			1. using declaration
 		1. static member access
-		1. static member initialization
-		1. pointer to member and member function address
-	1. anonymous struct 
-	1. union
+	1. anonymous class and struct 
+	1. union 		
 		1. anonymous union
-	1. enum
+	1. enum🟢🟢🟢
+		1. enum declaraion
+		1. enum definition
+			1. default value 
+			1. explicit value
 		1. enum class
+			1. using enum
 		1. enum base type
-		1. enum forward declaration
-		1. using enum
 1. control statements
 	1. if else
 	1. if constexpr else
@@ -182,9 +188,11 @@
 1. namespaces
 	1. inline namespaces
 	1. unnamed namespaces
+1. using 
+	1. typedef declaration
+	1. alias declaration
 	1. using namespace
-	1. using declaration
-1. using alias declaration
+	1. using enum
 1. user defined literals
 	1. integer literals
 	1. floating point literals
