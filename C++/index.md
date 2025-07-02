@@ -34,7 +34,7 @@
 	1. template variables
 	1. pointer to member
 	1. pointer to member function
-	1. alignas ❌❌❌
+	1. alignas
 1. literals
 	1. character literals
 	1. integer literals
@@ -114,16 +114,16 @@
 				1. const functions
 				1. volatile functions
 				1. static functions
-			1. constructors
+			1. special member functions
 				1. explicit constructor
 				1. default constructor
 				1. copy constructor
-				1. move constructor
-				1. delegating constructor
-			1. destructors
-			1. operators overloading 
 				1. copy assignment operator
+				1. move constructor
 				1. move assignment operator
+				1. delegating constructor
+			1. destructor
+			1. operators overloading 
 				1. arithmetic operators
 				1. comparison operators
 				1. logical operators
@@ -149,7 +149,7 @@
 	1. anonymous class and struct 
 	1. union 		
 		1. anonymous union
-	1. enum🟢🟢🟢
+	1. enum
 		1. enum declaraion
 		1. enum definition
 			1. default value 
@@ -159,21 +159,24 @@
 		1. enum base type
 1. control statements
 	1. if else
+		1. if init statment
 	1. if constexpr else
+		1. if constexpr init statement
 	1. if consteval else
+	1. if !consteval else
 	1. switch case default break
 	1. label goto
 	1. return
 	1. return void
 1. loop statements
 	1. for
-	1. range for b
+	1. range for 
+		1. range for with initializer
 	1. while
 	1. do while
 	1. break
 	1. continue
-1. deduction guides
-1. lambdas
+1. lambdas🟢🟢🟢
 	1. lambda capture
 		1. reference capture
 		1. value capture
@@ -225,6 +228,7 @@
 	1. template template parameters
 	1. auto template parameters
 	1. concept in template parameters
+1. deduction guides
 1. exceptions
 	1. throw
 	1. rethrow

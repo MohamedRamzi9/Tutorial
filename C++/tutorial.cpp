@@ -8,7 +8,7 @@ struct MyStruct {
 int function(int a);
 template <class s> concept always_true = true; 
 namespace Namespace { int x; }
-
+char array[10];
 
 
 
@@ -50,6 +50,7 @@ char32_t char32_var; // for UTF-32 characters
 std::nullptr_t nullptr_var; // the type of nullptr
 void* void_ptr_var; // can add more * to make it a pointer to pointer, etc.
 char array_var[10]; // array of 10 chars, size must be known at compile time
+char matrix_var[3][4]; // multidimensional array, the size of each dimension can be variable except the inner most one must be known at compile time
 char& lvalue_ref_var = char_var; // lvalue reference, must be initialized
 char&& rvalue_ref_var = 'a'; // rvalue reference, must be initialized
 MyStruct my_struct_var; // user-defined type
@@ -61,6 +62,7 @@ thread_local int thread_local_var; // unique to each thread
 constinit int constinit_var = 20; // must be initialized at declaration, can be changed later
 constexpr int constexpr_var = 30; // must be initialized at declaration, will be replaced at compile time
 inline int inline_var = 40; // allows same definition in different translation units
+alignas(16) int aligned_var; // variable with alignment requirement, can be any power of 2
 int (*function_ptr)(int) = function; // function pointer
 int (*function_ptr)(int) = &function; // can also use address-of operator
 int (&function_ref)(int) = function; // function reference
@@ -266,6 +268,7 @@ protected: // protected access specifier, members are accessible from inside the
 	void const_function() const; // const member function, can be called on const objects and modify non-mutable members of the class
 	void volatile_function() volatile; // volatile member function, can be called on volatile objects
 
+	// Special Member Functions
 	Base(); // default constructor declaration
 	Base(int a); // constructor declaration with parameter
 	Base(int a) : x(a) { // constructor definition with member initializer list
@@ -273,7 +276,9 @@ protected: // protected access specifier, members are accessible from inside the
 	}
 	explicit Base(); // explicit constructor, prevents implicit conversions
 	Base(const Base&); // copy constructor declaration
+	Base& operator=(const Base&); // copy assignment operator declaration
 	Base(Base&&); // move constructor declaration
+	Base& operator=(Base&&); // move assignment operator declaration
 	Base() : Base(0) {} // delegating constructor, member initializer list isn't allowed here
 	~Base(); // destructor declaration
 
@@ -357,3 +362,91 @@ enum class ClassEnum { one, two, }; // enum class, values can only be accessed v
 ClassEnum::one; // accessing class enum values
 using enum ClassEnum; // introduces all enumerators to the enclosing scope
 enum BaseTypeEnum : char {a, b}; // enum with base type, will use that type for the enumerators
+
+// === Control Statements ===
+// If-Else
+if (true) { // if statement, braces are optional if the body has only one statement
+	// if condition is true, this block will be executed
+} else if (false) { // else if statement, optional, it's just an else with one statement which is an if
+} else { // else statement, optional, braces also optional if the body has only one statement
+	// if no condition is true, this block will be executed
+}
+
+if (int a = 4; a < 4); // if statement with init statement
+
+// If-Else constexpr
+if constexpr (true) { // if constexpr statement, evaluated at compile time
+	// if condition is true, this block will be added to the program, else it will be removed
+} else { // else statement, optional, 
+	// if condition is false, this block will be added to the program, else it will be removed
+}
+
+if constexpr (constexpr int a = 4; a < 4); // if constexpr statement with init statement, evaluated at compile time
+
+// If-Else consteval
+if consteval { // if consteval statement, braces are mandatory
+	// this block will be excecuted when the program is compiled and then removed from the program
+} else {
+	// this block will be excecuted when the program is running as if there was no if statement
+}
+if !consteval { // if !consteval statement, the inverse of consteval
+	// this block will be excecuted when the program is running as if there was no if statement
+} else {
+	// this block will be excecuted when the program is compiled and then removed from the program
+}
+
+// Switch-Case
+switch (5) { // switch case statment, condition must be an integral type or enum 
+	case 3: { // case statement, braces are optional if the body has no declaration
+		// code will be executed from here to the end of the switch
+		break; // break statement, optional, will exit the switch statement
+	}
+	case 4:
+	case 5: // multiple case statements, can be used to group cases together
+	break; // break statement can appear anywhere in the switch statement
+
+	default: {} // default case, optional, will be executed if no case matches, can appear anywhere in the switch statement
+}
+switch (int a = 4; a) {} // switch statement with init statement
+
+// Label-Goto
+label: // label statement, can be used to jump to this point in the code
+goto label; // goto statement, jumps to the label statement, 
+
+// Reeturn
+void function() {
+	return; // return statement, exits the function without returning a value when the function is void
+	int a = 9; // statement after return will not be executed
+}
+int function() { return 5; } // return statement with value, exits the function and returns the value
+
+// === Loop statements ===
+// For Loop
+for (int x = 0; x < 10; ++x) { // for loop, braces are optional if the body has only one statement
+	// code will be executed 10 times
+	if (x == 5) 
+		break; // break statement, exits the loop
+	if (x == 3)
+		continue; // continue statement, skips the rest of the loop body and goes to the next iteration
+}
+for (;;); // both initializer, condition and increment are optional, this will create an infinite loop
+
+// Range For Loop
+for (auto& element : array) { // range for loop, iterates over the elements returned by the iterator object, parentheses are optional if the body has only one statement
+	// code will be executed for each element in the array
+}
+for (char array[5] = {1}; int& i : array); // range for loop with initializer
+
+// While Loop
+while (true) { // while loop, braces are optional if the body has only one statement
+	// code will be executed as long as the condition is true
+	if (false)
+		break; // break statement, exits the loop
+	if (true)
+		continue; // continue statement, skips the rest of the loop body and goes to the next iteration
+}
+
+// Do-While Loop
+do { // do-while loop, braces are optional if the body has only one statement
+	// code will be executed at least once
+} while (true); // condition is checked after the loop body

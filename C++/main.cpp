@@ -28,31 +28,51 @@
 	return input;
 }
 
+void app() {
+#ifdef debug_flag
+	static_assert(add(1, 2) == 3, "add(1, 2) should be 3");
+#endif
+
+	rmz::println("Enter first operand: ");
+	std::string op1_input = read_string();
+	rmz::println("Enter second operand: ");
+	std::string op2_input = read_string();
+
+#ifdef debug_flag
+	if (not std::all_of(op1_input.begin(), op1_input.end(), ::isdigit)) {
+		rmz::println("Error: First operand '{}' is not a valid integer", op1_input);
+		std::terminate();
+	} else if (not std::all_of(op2_input.begin(), op2_input.end(), ::isdigit)) {
+		rmz::println("Error: Second operand '{}' is not a valid integer", op2_input);
+		std::terminate();
+	}
+#endif
+
+
+	int op1 = std::stoi(op1_input);
+	int op2 = std::stoi(op2_input);
+	int result = add(op1, op2);
+	rmz::println("Result of adding {} and {} is: {}", op1, op2, result);		
+}
+
 int main() {
-// #ifdef debug_flag
-// 	static_assert(add(1, 2) == 3, "add(1, 2) should be 3");
-// #endif
 
-// 	rmz::println("Enter first operand: ");
-// 	std::string op1_input = read_string();
-// 	rmz::println("Enter second operand: ");
-// 	std::string op2_input = read_string();
+	switch (3) {
+		case 3:
+		rmz::println("Case 3");
+		goto _3_and_4;
 
-// #ifdef debug_flag
-// 	if (not std::all_of(op1_input.begin(), op1_input.end(), ::isdigit)) {
-// 		rmz::println("Error: First operand '{}' is not a valid integer", op1_input);
-// 		std::terminate();
-// 	} else if (not std::all_of(op2_input.begin(), op2_input.end(), ::isdigit)) {
-// 		rmz::println("Error: Second operand '{}' is not a valid integer", op2_input);
-// 		std::terminate();
-// 	}
-// #endif
+		case 4:
+		rmz::println("Case 4");
+		goto _3_and_4;
 
+		_3_and_4:
+		rmz::println("Switch case example");
+		break;
 
-// 	int op1 = std::stoi(op1_input);
-// 	int op2 = std::stoi(op2_input);
-// 	int result = add(op1, op2);
-// 	rmz::println("Result of adding {} and {} is: {}", op1, op2, result);		
-
+		case 8:
+		rmz::println("Case 8");
+		break;
+	}
 
 }
