@@ -134,6 +134,7 @@
 				1. pointer to member operator
 				1. static call operator
 				1. static subscript operator
+				1. comma operator ❌❌❌
 			1. default special functions
 			1. nested class 
 			1. inheritance
@@ -160,6 +161,7 @@
 1. control statements
 	1. if else
 		1. if init statment
+		1. structured binding declaration as condition ❌❌❌
 	1. if constexpr else
 		1. if constexpr init statement
 	1. if consteval else
@@ -176,27 +178,31 @@
 	1. do while
 	1. break
 	1. continue
-1. lambdas🟢🟢🟢
+1. lambdas
 	1. lambda capture
-		1. reference capture
-		1. value capture
-		1. this capture
+		1. capture all by value and reference
+		1. capture by value and reference
 		1. init capture
+		1. static mutable noexcept
+		1. this capture
+		1. parameter pack capture and init capture
 	1. parameters
-	1. template parameters
-1. modules
-	1. module declaration
-	1. module import
-	1. module export
+		1. deducing this parameter
+	1. trailing return type
+	1. lambda calling 
 1. namespaces
+	1. namespace definition
+		1. nested namespace definition
+	1. namespace access
 	1. inline namespaces
 	1. unnamed namespaces
+	1. using namespace
 1. using 
 	1. typedef declaration
+		1. unnamed struct typedef
 	1. alias declaration
-	1. using namespace
-	1. using enum
-1. user defined literals
+	1. using as statement
+1. user defined literals🟢🟢🟢
 	1. integer literals
 	1. floating point literals
 	1. string literals
@@ -224,10 +230,13 @@
 1. typeid specifier
 1. asm declaration
 1. templates
-	1. variadic template parameters
+	1. template parameter pack
+		1. pack indexing
 	1. template template parameters
 	1. auto template parameters
 	1. concept in template parameters
+	1. function and lambda template parameters
+		1. auto parameters
 1. deduction guides
 1. exceptions
 	1. throw
@@ -248,3 +257,7 @@
 	1. #warning
 	1. #pragma
 		1. once
+1. modules 
+	1. module declaration
+	1. module import
+	1. module export

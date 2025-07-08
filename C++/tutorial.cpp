@@ -360,7 +360,8 @@ Enum x = 4; // and can be initialized from base which corresponds to enumerator 
 enum { A, B, C, } Enum; // anonymous enum
 enum class ClassEnum { one, two, }; // enum class, values can only be accessed via scope resolution operator
 ClassEnum::one; // accessing class enum values
-using enum ClassEnum; // introduces all enumerators to the enclosing scope
+using ClassEnum::two, ClassEnum::one; // using declaration, introduces one or more enumerators of the enum class into the enclosing scope
+using enum ClassEnum; // introduces all enumerators of an enum to the enclosing scope
 enum BaseTypeEnum : char {a, b}; // enum with base type, will use that type for the enumerators
 
 // === Control Statements ===
@@ -450,3 +451,63 @@ while (true) { // while loop, braces are optional if the body has only one state
 do { // do-while loop, braces are optional if the body has only one statement
 	// code will be executed at least once
 } while (true); // condition is checked after the loop body
+
+
+// === Lambdas ===
+// Capture
+auto lambda = [](){}; // lambda expression, with no capture, no parameters and empty body
+auto lambda = []{}; // the parentheses are optional if there are no parameters
+auto lambda = [=]{}; // capture all variables in the enclosing scope by value
+auto lambda = [&]{}; // capture all variables in the enclosing scope by reference
+int var1, var2;
+auto lambda = [var1, &var2, var3=var2]{}; // capture var1 by value and var2 by reference, and create a new variable var3 using capture init
+auto lambda = [] static {}; // static lambda when there are no parameters
+auto lambda = [=] mutable {}; // mutable capture, allows modification of the capture variables, by default ther are const
+auto lambda = [] noexcept {}; // noexcept lambda, will not throw an exception
+struct A {
+	void method() { 
+		[this] { this->method(); }; // this capture, allows accessing this
+		[*this] mutable { this->method(); }; // *this capture, creates a const copy of the object
+	} 
+}; 
+void function(auto... args) {
+	[args...]{(args,...);}; // parameter pack capture
+	[...new_args=args]{(new_args,...);}; // parameter pack capture init 
+}
+
+auto lambda = [](int a, int b) { return a + b; }; // lambda expression with parameters 
+auto lambda = [](this auto&& lambda, int x) { return x ? x == 1 : lambda(lambda, x - 1); }; // deducing this parameter, allows accessing the lambda itself for recursion 
+auto lambda = [](auto a, auto b) -> int { return a + b; }; // lambda expression with trailing return type
+lambda(1, 2); // calling the lambda 
+
+
+// === Namespaces ===
+namespace Namespace { // namespace definition 
+	int a; // member dclaration
+	namespace Nested {} // nested namespace definition
+} 
+namespace Namespace::Nested { // nested namespace definition with no elements in parent namespace
+	int b; // member declaration
+}
+inline namespace Namespace { // inline namespace, makes all members of the namespace visible in the enclosing scope, only one inline namespace per scope
+	int x; 
+}
+namespace Namespace { // unnamed namespace, gives internal linkage to all members of namespace, only visible in the current translation unit
+	int y; 
+} // equivalent to static int y;
+
+Namespace::a = 10; // accessing namespace member
+Namespace::Nested::b = 20; // accessing nested namespace member
+x = 19; // accessing inline namespace member
+Namespace::x = 20; // accessing inline namespace member with scope resolution operator
+y = 30; // accessing unnamed namespace member
+
+using Namespace::a, Namespace::Nested::b; // using declaration, introduces one or more members of the namespace into the enclosing scope to be accessed directly
+using namespace Namespace; // using namespace declaration, introduces all members of the namespace into the enclosing scope
+
+// === Using ===
+typedef int my_int, *my_int_ptr, &my_int_ref; // typedef declaration, creates an alias name for int called my_int, for pointer to int called my_int_ptr, for reference to int called my_int_ref
+typedef struct { int x; int y; } my_struct; // unamed struct typedef, declares a struct and gives it a name my_struct
+using my_alias = int; // alias declaration, creates an alias name for int called my_alias
+for (typedef int my_type; my_type x : std::vector{1, 2, 3}); // typedef as a statement
+for (using my_type = int; my_type x : std::vector{1, 2, 3}); // using as a statment
