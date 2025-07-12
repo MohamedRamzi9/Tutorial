@@ -1,6 +1,4 @@
 #include <cstddef> // for std::nullptr_t
-#include <stdfloat> // for std::float16_t, std::float32_t, std::float64_t, std::float128_t, std::bfloat16_t
-#include <typeinfo> // for std::type_info
 #include <string> 
 struct MyStruct { 
 	int x, y;
@@ -106,6 +104,7 @@ int separated_decimal_int = 1'2323'124;
 double double_var = 1.23;
 float float_var = 1.23f, 1.23F;
 long double long_double_var = 1.23l, 1.23L; 
+#include <stdfloat> // for std::float16_t, std::float32_t, std::float64_t, std::float128_t, std::bfloat16_t
 std::float16_t float16_var = 1.23f16, 1.23F16; 
 std::float32_t float32_var = 1.23f32, 1.23F32;
 std::float64_t float64_var = 1.23f64, 1.23F64;
@@ -198,6 +197,7 @@ int ternary_result = 1 < 2 ? 3 : 4; // ternary operator
 int comma_result = 1, 3; // comma operator, was using it all along ;)
 int sizeof_result = sizeof(int); // sizeof operator, there is also sizeof... for parameter packs
 int alignof_result = alignof(int); // alignof operator, returns alignment of type
+#include <typeinfo> // for std::type_info
 const std::type_info& typeid_result = typeid(int), typeid(1 + 2); // typeid operator, returns
 
 // New and Delete, needs more refinement 
@@ -554,3 +554,56 @@ int function(int x) {
 	return x + 1; // the compiler may optimize the code and return 33
 }
 [[noreturn]] void noreturn_function(); // noreturn attribute, tells the compiler that the function will not return to it's caller
+
+
+// === Type Casting ===
+static_cast<int>(1.5); // static cast, compile time checked, can be used for any type of valid cast
+
+struct Base { ~Base() {} }; struct Derived : Base {};
+dynamic_cast<Derived*>(new Derived); // dynamic cast, runtime checked, allows casting between polymorphic types, requires at least one virtual function in the base class, returns nullptr if the cast fails
+dynamic_cast<Derived&&>(Derived()); // dynamic cast with reference, will throw std::bad_cast if the cast fails
+
+volatile const int volatile_const_var = 10;
+const_cast<int*>(&volatile_const_var); // const cast, allows casting away const and volatile qualifiers, the original const variable should not be modified or it's undefined behavior  
+const_cast<int&>(volatile_const_var); // const cast with reference
+const_cast<const int&>(volatile_const_var); // cast away volatile and keep const, the inverse is not allowed
+
+int result = *reinterpret_cast<int*>((char []){'a', 'b', 'c', 'd'}); // reinterpret cast, allows reinterpreting the bits of one type as another type, should not be used for polymorphic type casting
+
+(float)1.5; // C-style cast, compiler will try all the casts in a specific order, not recommended as it can lead to unexpected results
+
+float(1.5); // functional cast, calls the conversion operator of the the value, if not available it will call the constructor of the new type
+
+
+// === Coroutines ===
+#include <coroutine> // for std::coroutine_handle
+struct Awaitable { // awaitable type, returned by the co_await expression
+	bool await_ready() noexcept { return false; } // returns true if the coroutine should be suspended, false if it should continue, it is called when the co_await expression is evaluated
+	void await_suspend(std::coroutine_handle<>) {} // called when the coroutine is suspended, takes the coroutine handle as an argument, can be used to resume the coroutine later, the void version does not return a value
+	bool await_suspend(std::coroutine_handle<>) { return true; } // this version may further decide to suspend the coroutine and return true, or resume it and return false
+	std::coroutine_handle<> await_suspend(std::coroutine_handle<>) { return {}; } // this version returns another coroutine handle, which will be resumed in place of the current coroutine which will be suspended
+	void await_resume() {} // called when the coroutine is resumed both if it was suspended or not, this version does not return a value
+	int await_resume() { return 0; } // this version returns a value
+};
+struct Coroutine { // coroutine type, returned when calling the coroutine function
+	struct promise_type { // promise type, should have this exact name, will be called by the compiler when the coroutine function is called
+        Coroutine get_return_object() { return {std::coroutine_handle<promise_type>::from_promise(*this)}; } // returns the coroutine object to the caller to control the coroutine
+        Awaitable initial_suspend() { return {}; } // called when the coroutine is first called, returns an awaitable that will decide if the coroutine should be suspended or not
+        Awaitable final_suspend() noexcept { return {}; } // called when the coroutine is finished, returns an awaitable that will decide if the coroutine should be suspended or not
+        Awaitable yield_value(int value) { return {}; } // called when using co_yield expression inside the coroutine function, returns an awaitable that will decide if the coroutine should be suspended or not
+        void return_value(int value) {} // called when using co_return expression inside the coroutine function
+		void return_void() {} // called when using co_return with no expression inside the coroutine function 
+        void unhandled_exception() {} // called when an exception is thrown inside the coroutine function
+    };
+	std::coroutine_handle<promise_type> handle; // coroutine handle, used to control the coroutine if desired
+	Coroutine(std::coroutine_handle<promise_type> h) : handle(h) {} // called by get_return_object to create the coroutine object
+};
+Coroutine coroutine_function() { // coroutine function, returns a coroutine object
+	co_await Awaitable(); // co_await expression, the awaitable will decide if the coroutine should be suspended or not
+	co_yield 1; // co_yield expression, the awaitable will decide if the coroutine should be suspended or not
+	co_return; // co_return expression, the coroutine will be finished and the return_void or return_value will be called
+}
+Coroutine coroutine = coroutine_function(); // calling the coroutine function, returns a coroutine object
+coroutine.handle.resume(); // resumes the coroutine when it's suspended
+coroutine.handle.destroy(); // destroys the coroutine when it's finished
+coroutine.handle.promise(); // gets the promise object of the coroutine

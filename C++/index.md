@@ -220,14 +220,14 @@
 	1. [[assume]]
 	1. [[noreturn]]
 	1. using namespace attributes ❌❌❌
-1. type casting🟢🟢🟢
+1. type casting
 	1. static cast
 	1. dynamic cast
 	1. const cast
 	1. reinterpret cast
 	1. c style cast
 	1. function style cast
-1. coroutines
+1. coroutines🟢🟢🟢
 	1. co_await
 	1. co_yield
 	1. co_return
