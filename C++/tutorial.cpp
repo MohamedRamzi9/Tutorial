@@ -1,6 +1,7 @@
 #include <cstddef> // for std::nullptr_t
 #include <stdfloat> // for std::float16_t, std::float32_t, std::float64_t, std::float128_t, std::bfloat16_t
 #include <typeinfo> // for std::type_info
+#include <string> 
 struct MyStruct { 
 	int x, y;
 	void method() {}
@@ -9,7 +10,7 @@ int function(int a);
 template <class s> concept always_true = true; 
 namespace Namespace { int x; }
 char array[10];
-
+struct empty {};
 
 
 // ========================================
@@ -511,3 +512,45 @@ typedef struct { int x; int y; } my_struct; // unamed struct typedef, declares a
 using my_alias = int; // alias declaration, creates an alias name for int called my_alias
 for (typedef int my_type; my_type x : std::vector{1, 2, 3}); // typedef as a statement
 for (using my_type = int; my_type x : std::vector{1, 2, 3}); // using as a statment
+
+
+// === User Defined Literals === return type can be anything, suffix can be any identifier, preferably preceded by _ to not conflict future standard literals
+int operator""my_int_x10(unsigned long long int value) { // user defined literal for int
+	return value * 10; 
+}
+char operator""_double_to_char(long double value) { // user defined literal for double
+	return 'a';
+}
+int operator""_number_fallback(const char* n) { // user defined literal fallback for integer and floating point numbers if the corresponding operator is not defined
+	return std::stoi(n); // converts string to integer
+}
+char operator""_char(char value) { // user defined literal for char, first parameter can also be of type char8_t, char16_t, char32_t, wchar_t
+	return value;
+}
+int operator""_string_size(const char* str, std::size_t size) { // user defined literal for string, first parameter can also be of type char8_t, char16_t, char32_t, wchar_t
+	return size;
+}
+template <char... chars> int operator""_char_count() { // user defined literal for template char pack, can be with any literal type if the coresponding operator is not defined
+	return sizeof...(chars);
+}
+
+
+// === Attributes ===
+[[deprecated("reason")]] int deprecated_function(); // deprecated attribute, marks the function as deprecated, compiler will warn if used, the reason is optional
+[[nodiscard("reason")]] int nodiscard_function(); // nodiscard attribute, compiler will warn if the return value is not used, the reason is optional
+[[maybe_unused]] int maybe_unused_var; // maybe_unused attribute, compiler will not warn if the variable is not used, usefull when compiling with flags that treat warnings as errors
+struct s {
+	[[no_unique_address]] int var1;
+	[[no_unique_address]] empty var2; // no_unique_address attribute, allows the compiler to optimize the memory layout of the class by using the same memory address for all empty members
+};
+switch (int x) {
+	case 1: [[fallthrough]]; // fallthrough attribute, tells the compiler that it's intentional to fall through to the next case without a break statement, used when enabling compiler warnings for case statments without break
+	case 2: ;
+}
+if (int x) [[likely]]; // likely attribute, tells the compiler that this branch is likely to be taken, used for optimization
+if (int x) [[unlikely]]; // unlikely attribute, tells the compiler that this branch is unlikely to be taken, used for optimization
+int function(int x) {
+	[[assume(x == 32)]]; // assume attribute, tells the compiler that the condition will always be true, used for optimization
+	return x + 1; // the compiler may optimize the code and return 33
+}
+[[noreturn]] void noreturn_function(); // noreturn attribute, tells the compiler that the function will not return to it's caller

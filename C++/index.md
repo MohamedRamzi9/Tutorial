@@ -199,16 +199,28 @@
 	1. using namespace
 1. using 
 	1. typedef declaration
+		1. variable declaration in typedef ❌❌❌
 		1. unnamed struct typedef
 	1. alias declaration
 	1. using as statement
-1. user defined literals🟢🟢🟢
+1. user defined literals
 	1. integer literals
 	1. floating point literals
 	1. string literals
 	1. character template literals
 1. attributes
-1. type casting
+	1. [[deprecated]]
+	1. [[nodiscard]]
+	1. [[maybe_unused]]
+	1. [[no_unique_address]]
+	1. [[fallthrough]]
+	1. [[likely]]
+	1. [[unlikely]]
+	1. [[carries_dependency]] ❌❌❌
+	1. [[assume]]
+	1. [[noreturn]]
+	1. using namespace attributes ❌❌❌
+1. type casting🟢🟢🟢
 	1. static cast
 	1. dynamic cast
 	1. const cast
