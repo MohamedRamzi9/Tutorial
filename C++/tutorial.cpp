@@ -9,7 +9,9 @@ template <class s> concept always_true = true;
 namespace Namespace { int x; }
 char array[10];
 struct empty {};
-
+template <typename T> concept Return = true;
+template <typename T> concept Param = true;
+struct Object { int a = 9; }; constexpr Object object;
 
 // ========================================
 
@@ -601,9 +603,54 @@ struct Coroutine { // coroutine type, returned when calling the coroutine functi
 Coroutine coroutine_function() { // coroutine function, returns a coroutine object
 	co_await Awaitable(); // co_await expression, the awaitable will decide if the coroutine should be suspended or not
 	co_yield 1; // co_yield expression, the awaitable will decide if the coroutine should be suspended or not
-	co_return; // co_return expression, the coroutine will be finished and the return_void or return_value will be called
+	co_return 3; // co_return with expression, the coroutine will be finished and the return_value will be called with the value
+	co_return; // co_return with no expression, the coroutine will be finished and the return_void or return_value will be called
 }
 Coroutine coroutine = coroutine_function(); // calling the coroutine function, returns a coroutine object
 coroutine.handle.resume(); // resumes the coroutine when it's suspended
 coroutine.handle.destroy(); // destroys the coroutine when it's finished
 coroutine.handle.promise(); // gets the promise object of the coroutine
+
+
+// === Concepts ===
+template <typename T> concept AlwaysTrue = true; // concept definition, the right side must be a constant expression convertible to bool
+constexpr bool result = AlwaysTrue<int>; // concept usage, pass all the template parameters to the concept, and it returns true or false
+
+
+// === Requires ===
+constexpr bool result = requires { // requires expression, will return true if all the statements inside the braces are valid c++ code, otherwise false
+	sizeof(int) == 1; // valid expression
+	{ int(1.4) } -> std::same_as<int>; // valid expression, also checks the result type of the expression using a concept, braces are mandatory here
+};
+template <class T> concept Concept = requires(T t) { // requires expression with parameters, those parameters are not real and only used when an object of the type T is required 
+	{ t.method() } -> std::same_as<int>; // valid expression, checks if the method exists and returns an int
+	T::method(); // suppose method is not static for a given T, this is not valid so the concept will be false
+};
+template <typename T> requires (Return<T> and true) void function(T t); // requires clause, if the expression of the requires clause is false the function will not be instantiated, parentheses around the expression are optional when needed
+template <typename T> void function(T t) requires Return<T> and true; // postfix requires clause, same as the previous one
+template <typename T> void function(T t) requires requires(T t) { t.method(); } or Param<T> and requires { T::method(); }; // the expression of the requires clause can be or contain a requires expressions with or without parameters, same for prefix form
+template <typename T> requires std::same_as<T, int> and requires { T::method(); } struct S; // requires clause in class definition, the class will not be defined if the expression is false
+
+// === Static Assertions ===
+static_assert(sizeof(int) == 4, "int must be 4 bytes"); // static assertion, will cause a compilation error if the constant expression convertible to bool is false, the second argument is the error message
+static_assert(AlwaysTrue<int>); // static assertion with no message
+static_assert(true, std::string("message: ") + "user generated error message"); // static assertion with user generated message, the message object must have a size() method returning a size_t and a data() method returning a const char* or char* pointer 
+
+// === Decltype Specifier ===
+decltype(1 + 2) const var; // decltype specifier, deduces the type of the expression without evaluating it which can be used in a declaration
+decltype(var) var2; // decltype deduces cv-qualifiers and references unlike auto
+
+
+// === Templates ===
+// template function
+template <typename T, class U> T template_function(U); // template function declaration, can use typename or class, template parameters can be used in return type, parameters, or insied the function
+template <typename... Types> void template_parameter_pack(Types...); // template parameter pack, can be used to declare parameter pack
+template <class T = void> void default_template_parameter(); // default template parameter, will use the default type if no type is provided at instanciation  
+template <class> void unamed_template_paramter(); // unnamed template paramter, cannot be accessed, but doesn't give error if you pass one at instanciation
+template <class = void> void unamed_default_template(); // unnamed default template paramter, cannot be accessed and can be provided or not at instanciation
+void auto_parameter(auto x, auto... pack); // auto paramters and auto parameters pack, this declares a templated function
+auto auto_return(); // auto return type, this declares a templated function, return type will be deduced from return expression
+template <int x, float... pack, Object obj> void non_type_template_parameters(); // non type template parameters and parameters pack, used type must be literal type or have all methods constexpr and a default operator<=>, no uninitialized members, and must be a constexpr lvalue
+template <auto x, auto... pack> void auto_template_parameters(); // auto template paramters and auto parameter pack, the type will be deduced of the parameter will be deduced at instanciation
+template <template <class T> class Template> void template_template_parameter(); // template template parameter, asslows passing templates without speciallizing them
+template <Concept T, std::same_as<int> U> void function(); // using concept in template parameters allows contraining the template type has to satisfy the concept, the template parameter will be passed as first argument to the concept

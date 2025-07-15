@@ -227,28 +227,37 @@
 	1. reinterpret cast
 	1. c style cast
 	1. function style cast
-1. coroutines🟢🟢🟢
+1. coroutines
+	1. awaitable
+	1. promise
 	1. co_await
 	1. co_yield
 	1. co_return
-	1. promise
-	1. awaitable
 1. concepts
-1. requires expression
-	1. requires with args
-	1. requires requires
+	1. template concepts
+1. requires
+	1. requires expression
+		1. requires expression without parameters
+		1. requires expression with parameters
+	1. requires clause
+		1. function requires clause
+		1. class requires clause
 1. static assert
 1. decltype specifier
-1. typeid specifier
-1. asm declaration
-1. templates
-	1. template parameter pack
-		1. pack indexing
-	1. template template parameters
-	1. auto template parameters
-	1. concept in template parameters
-	1. function and lambda template parameters
-		1. auto parameters
+1. templates🟢🟢🟢
+	1. template function 
+		1. template declaration
+		1. template parameter pack and paramter pack
+		1. default template parameters
+		1. unnamed template paramters 
+		1. default unnamed template parameters
+		1. auto function parameters 
+		1. auto return type
+		1. non type tempalate paramters
+		1. auto template parameters
+		1. template template parameters
+		1. concept in template parameters
+	1. lambda template parameters			
 1. deduction guides
 1. exceptions
 	1. throw
@@ -273,3 +282,4 @@
 	1. module declaration
 	1. module import
 	1. module export
+1. asm declaration
