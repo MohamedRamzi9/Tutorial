@@ -643,7 +643,7 @@ decltype(var) var2; // decltype deduces cv-qualifiers and references unlike auto
 
 // === Templates ===
 // template function
-template <typename T, class U> T template_function(U); // template function declaration, can use typename or class, template parameters can be used in return type, parameters, or insied the function
+template <typename T, class U> T template_function(U); // template function declaration, can use typename or class, template parameters can be used in return type, parameters, or insied the function, the function will only exist if it is instanciated
 template <typename... Types> void template_parameter_pack(Types...); // template parameter pack, can be used to declare parameter pack
 template <class T = void> void default_template_parameter(); // default template parameter, will use the default type if no type is provided at instanciation  
 template <class> void unamed_template_paramter(); // unnamed template paramter, cannot be accessed, but doesn't give error if you pass one at instanciation
@@ -652,5 +652,18 @@ void auto_parameter(auto x, auto... pack); // auto paramters and auto parameters
 auto auto_return(); // auto return type, this declares a templated function, return type will be deduced from return expression
 template <int x, float... pack, Object obj> void non_type_template_parameters(); // non type template parameters and parameters pack, used type must be literal type or have all methods constexpr and a default operator<=>, no uninitialized members, and must be a constexpr lvalue
 template <auto x, auto... pack> void auto_template_parameters(); // auto template paramters and auto parameter pack, the type will be deduced of the parameter will be deduced at instanciation
+void concept_auto_template_paramters(Concept auto x, Concept auto... pack); // concept template parameters and concept auto parameter pack, creates a template function that only accecpts parameters that satisfy the concepts
 template <template <class T> class Template> void template_template_parameter(); // template template parameter, asslows passing templates without speciallizing them
 template <Concept T, std::same_as<int> U> void function(); // using concept in template parameters allows contraining the template type has to satisfy the concept, the template parameter will be passed as first argument to the concept
+template <> int template_function<int, char>(char); // template function specialization, create a specific version for a general function
+int template_function(char); // equivalant to tmeplate function specialization, no template needed if all parameters are specified
+
+// template classes
+template <typename T, class U> class template_class; // template class, all the previous template features work for classes too, the class will only exist if it is instanciated
+template <> class template_class<int, char>; // template class specialization, allows creating specific definition of the class by specifying all template parameters
+template <typename T, class U> class template_class<T*, char>; // partial template specialization, allows creating specific definition of the class by specifying some template parameters 
+struct S { template <class> void template_member_function(); }; // template member function 
+
+auto template_lambda = [] <typename T> (T x) { return x; }; // template lambda, if the template parameters aren't deduced from the arguments, the they should be provided by calling operator() manualy
+
+

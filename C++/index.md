@@ -244,7 +244,7 @@
 		1. class requires clause
 1. static assert
 1. decltype specifier
-1. templates🟢🟢🟢
+1. templates
 	1. template function 
 		1. template declaration
 		1. template parameter pack and paramter pack
@@ -255,10 +255,15 @@
 		1. auto return type
 		1. non type tempalate paramters
 		1. auto template parameters
+		1. concept auto paramter and pack
 		1. template template parameters
 		1. concept in template parameters
+		1. template function specialization
+	1. template classes 
+		1. template specialization 
+		1. partial template specialization
 	1. lambda template parameters			
-1. deduction guides
+1. deduction guides🟢🟢🟢
 1. exceptions
 	1. throw
 	1. rethrow

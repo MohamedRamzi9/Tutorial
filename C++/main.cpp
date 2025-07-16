@@ -5,9 +5,9 @@
 #include <vector>
 #include <coroutine> // for coroutines
 
-template <class T, std::same_as<int> U> void function(); 
-int main() {
 
-	
+int main() {
+	auto lambda = []<class T>{};
+	lambda.operator()<int>();
 
 }
