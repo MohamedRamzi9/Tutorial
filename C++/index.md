@@ -31,7 +31,6 @@
 	1. auto
 	1. decltype(auto)
 	1. structured binding
-	1. template variables
 	1. pointer to member
 	1. pointer to member function
 	1. alignas
@@ -240,6 +239,7 @@
 		1. requires expression without parameters
 		1. requires expression with parameters
 	1. requires clause
+		1. variable requires clause
 		1. function requires clause
 		1. class requires clause
 1. static assert
@@ -262,8 +262,9 @@
 	1. template classes 
 		1. template specialization 
 		1. partial template specialization
+	1. template variables
 	1. lambda template parameters			
-1. deduction guides🟢🟢🟢
+1. deduction guides
 1. exceptions
 	1. throw
 	1. rethrow
@@ -272,7 +273,7 @@
 1. fold expressions
 	1. unary fold expressions (left and right)
 	1. binary fold expressions (left and right)
-1. preprocessor directives
+1. preprocessor directives🟢🟢🟢
 	1. #define #undef
 	1. #ifdef #ifndef #elfidef #elifndef  
 	1. #include

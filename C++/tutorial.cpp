@@ -72,7 +72,6 @@ decltype(auto_var) decltype_var = const_var; // type deduced from initializer wi
 auto [x, y] = my_struct_var; // structured binding to a copy of my_struct_var, x and y are references to members of the copy
 auto& [x, y] = my_struct_var; // structured binding that references my_struct_var, x and y are references to members of my_struct_var
 auto&& [x, y] = my_struct_var; // structured binding to an rvalue of my_struct_var, x and y are references to members of the rvalue
-template <typename T> int zero_var = T(0); // template variable
 int MyStruct::* ptr_to_member = &MyStruct::x; // pointer to member x of MyStruct
 void (MyStruct::* ptr_to_member_function)() = &MyStruct::method; // pointer to member function method of MyStruct
 
@@ -626,6 +625,7 @@ template <class T> concept Concept = requires(T t) { // requires expression with
 	{ t.method() } -> std::same_as<int>; // valid expression, checks if the method exists and returns an int
 	T::method(); // suppose method is not static for a given T, this is not valid so the concept will be false
 };
+template <typename T> requires std::is_integral_v<T> T template_variable;
 template <typename T> requires (Return<T> and true) void function(T t); // requires clause, if the expression of the requires clause is false the function will not be instantiated, parentheses around the expression are optional when needed
 template <typename T> void function(T t) requires Return<T> and true; // postfix requires clause, same as the previous one
 template <typename T> void function(T t) requires requires(T t) { t.method(); } or Param<T> and requires { T::method(); }; // the expression of the requires clause can be or contain a requires expressions with or without parameters, same for prefix form
@@ -659,11 +659,47 @@ template <> int template_function<int, char>(char); // template function special
 int template_function(char); // equivalant to tmeplate function specialization, no template needed if all parameters are specified
 
 // template classes
-template <typename T, class U> class template_class; // template class, all the previous template features work for classes too, the class will only exist if it is instanciated
+template <typename T, class U> class template_class { // template class, all the previous template features work for classes too, the class will only exist if it is instanciated
+	template_class(T, U); // template constructor, compiler can deduce template parameters from the type of the constructor arguments 
+	template_class(T); 
+}; 
 template <> class template_class<int, char>; // template class specialization, allows creating specific definition of the class by specifying all template parameters
 template <typename T, class U> class template_class<T*, char>; // partial template specialization, allows creating specific definition of the class by specifying some template parameters 
 struct S { template <class> void template_member_function(); }; // template member function 
 
 auto template_lambda = [] <typename T> (T x) { return x; }; // template lambda, if the template parameters aren't deduced from the arguments, the they should be provided by calling operator() manualy
 
+template <class T> template_class(T) -> template_class<T, typename T::U>; // deduction guides, helps the compiler deduce the template parameters from the constructor arguments when it's not clear
+template_class(int) -> template_class<int, double>; // deduction guide with no template parameters
 
+// template variables
+template <typename T> T zero_var = T(0); // template variable, can be used to create a variable of a specific type, all previous template features work for variables too
+
+
+// === Exceptions ===
+try { // try block, allows catching exceptions in catch blocks
+	throw std::runtime_error(); // throw expression, any type can be thrown, in this case the exception might be caught by the catch blocks of this try block 
+} catch (const std::exception& e) { // catch block for exception of type std::exception
+	std::cerr << "Exception caught: " << e.what() << std::endl;
+	throw; // rethrow the exception to be handeled else where, not in the following catch blocks of the current scope !
+} catch (int x) { // catch by value, any type can be catched
+} catch (...) { // catch all types if no previous catch block matches, must be last 
+}
+void function() try { // function try block, excetion might be caught in the function catch block
+	int x = 9;
+} catch (...) { // function catch block
+}
+struct Constructor_try {
+	int x;
+	Constructor_try() try : x(9) { // function try block, catches the initializer list exceptions too
+	} catch (...) {} // function catch block
+};
+
+
+// === Fold Expressions ===
+void function(auto... pack) {
+	(pack + ...); // unary left fold expression, expands to : (((pack1) + pack2) + ...) 
+	(... + pack); // unary right fold expression, expands to : (pack1 + (pack2 + ...))
+	(pack + ... + 10); // binary left fold expression, expands to : (((pack1) + pack2) + ...) + 10
+	(10 + ... + pack); // binary right fold expression, expands to : 10 + (pack1 + (pack2 + ...))
+}

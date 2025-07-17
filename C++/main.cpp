@@ -5,9 +5,10 @@
 #include <vector>
 #include <coroutine> // for coroutines
 
+template <typename T> concept C = ;
+
 
 int main() {
-	auto lambda = []<class T>{};
-	lambda.operator()<int>();
+
 
 }
