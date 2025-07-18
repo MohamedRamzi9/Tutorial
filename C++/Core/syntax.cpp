@@ -703,3 +703,39 @@ void function(auto... pack) {
 	(pack + ... + 10); // binary left fold expression, expands to : (((pack1) + pack2) + ...) + 10
 	(10 + ... + pack); // binary right fold expression, expands to : 10 + (pack1 + (pack2 + ...))
 }
+
+
+// === Preprocessor Directives ===
+#define DEBUG // empty macro definition, useful with #ifdef checking
+#define PI 3.14159 // variable macro definiton, will replace all instances of PI with 3.14159
+#define SQUARE(x) ((x) * (x)) // function macro definition, can take any number of arguments, will be replaced with the body of the function
+#define MULTILINE_MACRO(x) do { \ 
+	(x) * (x); \
+} while (0) // multiline macro definition, can span multiple lines, use \ to go to the next line
+#define VARIADIC_MACRO(...) (__VA_ARGS__) // variadic macro definition, __VA_ARGS__ will be replaced with all arguments passed to the macro
+#define STRINGIFY(x) #x // stringification operator, converts the argument to a string literal by adding double quotes around it
+#define CONCATENATE(x, y) x##y // token pasting operator, concatenates two tokens
+
+__LINE__, __FILE__, __DATE__, __TIME__, __func__, __cplusplus // predefined macros, will be replaced with the current line of code number, file name, date, time, function name and C++ standard version respectively
+
+#undef DEBUG // undefine macro, will remove the definition of DEBUG
+
+#ifdef DEBUG // ifdef directive, checks if a macro is defined
+// this code will be included if the macro is defined
+#endif // end of ifdef directive, mandatory
+#ifndef DEBUG // ifndef directive, checks if a macro is not defined
+#elifdef PI // elifdef directive, optional, checks if a macro is defined, will only match if the previous directive was not matched
+#elifndef SQUARE // elifndef directive, optional, checks if a macro is not defined, will only match if the previous directive was not matched
+#else // else directive, optional, will only match if the previous directive was not matched
+#endif
+
+#include <iostream> // include directive, will include the content of the file in this spot, the <file> version will search for the file in the standard library paths defined by the compiler,
+#include "file" // same as previous one, this version will search for the file in the current directory first, if not found it will search in the paths added to the compiler via flags when compiling
+
+#line 100 "file" // line directive, will change the current line number and optionally the file name, the new line number will start from the next line just after this comment
+// this comment will be on line 100 of file "file", and the next lines will continue from there
+#if true or defined(DEBUG) and !defined(PI) and PI < 3 or SQUARE(2) == 4 // if directive, checks if the expression is true, the expression can contain a defined() or !defined() directive to check if a macro is defined or not, and can contain any valid boolean expression composed of boolean literals, integers, enumerators, and other macros
+// this code will be included if the expression is true
+#elif false // elif directive, optional, will only match if the expression is true and the previous directive was not matched
+// this code will be included for the elif directive
+#endif // end of if directive, mandatory

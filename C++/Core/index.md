@@ -31,9 +31,11 @@
 	1. auto
 	1. decltype(auto)
 	1. structured binding
+		1. parameter pack via structured binding ❌❌❌
 	1. pointer to member
 	1. pointer to member function
 	1. alignas
+	1. placeholder variable with no name ❌❌❌
 1. literals
 	1. character literals
 	1. integer literals
@@ -218,6 +220,7 @@
 	1. [[carries_dependency]] ❌❌❌
 	1. [[assume]]
 	1. [[noreturn]]
+	1. [[indeterminate]] ❌❌❌
 	1. using namespace attributes ❌❌❌
 1. type casting
 	1. static cast
@@ -274,12 +277,20 @@
 	1. unary fold expressions (left and right)
 	1. binary fold expressions (left and right)
 1. preprocessor directives🟢🟢🟢
-	1. #define #undef
-	1. #ifdef #ifndef #elfidef #elifndef  
+	1. #define
+		1. empty macro
+		1. variable macro
+		1. function macro
+		1. multiline macro 
+		1. variadic macro
+		1. predefined macros
+		1. # and ## operators
+	1. #undef
+	1. #ifdef #ifndef #elifdef #elifndef  
 	1. #include
 	1. #line
-	1. #embed
-	1. #if #elif #else #endif
+	1. #embed ❌❌❌
+	1. #if #elif #else #endif defined !defined
 	1. #error
 	1. #warning
 	1. #pragma
@@ -289,3 +300,7 @@
 	1. module import
 	1. module export
 1. asm declaration
+1. contracts ❌❌❌
+1. expansion statements ❌❌❌
+1. reflection ❌❌❌
+1. 
