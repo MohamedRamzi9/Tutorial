@@ -5,12 +5,10 @@
 #include <vector>
 #include <coroutine> // for coroutines
 
-
+struct S {int x, y, z;};
 
 int main() {
-#define C() 12 * 4
-#if C() == 42
-	rmz::println("C() is 48");
-#endif
+
+	auto [a, _, _] = S{1, 2, 3}; // structured binding to unpack S into pack
 
 }

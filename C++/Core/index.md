@@ -35,7 +35,7 @@
 	1. pointer to member
 	1. pointer to member function
 	1. alignas
-	1. placeholder variable with no name ❌❌❌
+	1. placeholder variable with no name
 1. literals
 	1. character literals
 	1. integer literals
@@ -198,6 +198,7 @@
 	1. inline namespaces
 	1. unnamed namespaces
 	1. using namespace
+	1. namespace alias
 1. using 
 	1. typedef declaration
 		1. variable declaration in typedef ❌❌❌

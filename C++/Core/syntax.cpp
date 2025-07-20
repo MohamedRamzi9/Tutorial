@@ -15,19 +15,33 @@ struct Object { int a = 9; }; constexpr Object object;
 
 // ========================================
 
-// === Comments ===
+
+
+
+// ==============================
+// ========== COMMENTS ==========
+// ==============================
+
 // this is a single line comment
 /*
 this is a multi line comment
 */
 
 
-// === Main function ===
+
+// ===================================
+// ========== MAIN FUNCTION ==========
+// ===================================
+
 int main() {} // No arguments version
 int main(int argc, char* argv[]) {} // With arguments version
 
 
-// === Variables ===
+
+// ===============================
+// ========== VARIABLES ==========
+// ===============================
+
 // Decalaration
 int a; // single decaration
 int b, c; // multiple declaration of same type
@@ -74,9 +88,14 @@ auto& [x, y] = my_struct_var; // structured binding that references my_struct_va
 auto&& [x, y] = my_struct_var; // structured binding to an rvalue of my_struct_var, x and y are references to members of the rvalue
 int MyStruct::* ptr_to_member = &MyStruct::x; // pointer to member x of MyStruct
 void (MyStruct::* ptr_to_member_function)() = &MyStruct::method; // pointer to member function method of MyStruct
+int _ = 4; char _ = 'a'; // placeholder variable with no name, can be redeclared as many times with any type, can't be accessed
 
 
-// === Literals ===
+
+// ==============================
+// ========== LITERALS ==========
+// ==============================
+
 char ascii_char = 'a'; 
 char8_t utf8_char = u8'a';
 const char8_t* emoji = u8"😊", u8"\U0001F393", u8"\u1A29";
@@ -116,18 +135,18 @@ double double_literal = .3f, 3.;
 double double_scientific_literal = 3.e2, 3E2, 3e2, 3e+2, 3.e-2;
 double binary_exponent = 0x3.2p2, 0x3.2P2; 
 
-// String literals
-const char* string_literal = "asc \n \t \t \r \v \f \a \b \\a \0";
-const char* raw_string_literal = R"seq(some text \t \a)seq"; // seq can be anything even empty
+const char* string_literal = "asc \n \t \t \r \v \f \a \b \\a \0"; // string literal, sequence of characters surrounded by "" 
+const char* raw_string_literal = R"seq(some text \t \a)seq"; // raw string literal, 'seq' can be anything even empty
 
-// Boolean literals
-bool bool_literal = true, false;
-
-// Null pointer literal
-std::nullptr_t null_ptr_literal = nullptr; // can be used with any pointer type
+bool bool_literal = true, false; // Boolean literals
+std::nullptr_t null_ptr_literal = nullptr; // Null pointer literal can be used with any pointer type
 
 
-// === Iinitialization ===
+
+// =====================================
+// ========== INITIALIZATIONS ==========
+// =====================================
+
 int default_init; // default initialization, if type is class, default constructor is called instead
 int direct_init(20); // direct initialization, constructor is called, paratheses can not be empty
 int copy_init = 10; // value initialization, compiler will always optimize it to direct initialization
@@ -138,7 +157,11 @@ int aggregate_init = {40}; // aggregate initialization, same as uniform initiali
 MyStruct designated_init = {.x = 1, .y = 2}; // designated initialization, doesn't require all members, order must match type definition
 
 
-// === Operators ===
+
+// ===============================
+// ========== OPERATORS ==========
+// ===============================
+
 // Arithmetic Operators
 int result = 1 + 2; // addition
 result += 3; // compound addition
@@ -213,7 +236,12 @@ bool does_throw = noexcept(1 + 2); // noexcept operator
 
 int x = Namespace::x; // scope resolution operator, can be used on namespaces, classes, enums
 
-// === Functions ===
+
+
+// ===============================
+// ========== FUNCTIONS ==========
+// ===============================
+
 void function_declaration(); // declaration with no definition;
 auto auto_return_type() { return 1; }; // return type deduced from return statement
 auto trailing_return_type() -> int; // trailing return type
@@ -242,7 +270,11 @@ void static_variable_function() { // static variables in functions, retain their
 }
 
 
-// === Types ===
+
+// ===========================
+// ========== TYPES ==========
+// ===========================
+
 // Classes
 class my_class; // class declaration, you can have pointer to incomplete class
 struct my_struct; // same as class but default access specifier is public whereas private for class
@@ -366,7 +398,12 @@ using ClassEnum::two, ClassEnum::one; // using declaration, introduces one or mo
 using enum ClassEnum; // introduces all enumerators of an enum to the enclosing scope
 enum BaseTypeEnum : char {a, b}; // enum with base type, will use that type for the enumerators
 
-// === Control Statements ===
+
+
+// ========================================
+// ========== CONTROL STATEMENTS ==========
+// ========================================
+
 // If-Else
 if (true) { // if statement, braces are optional if the body has only one statement
 	// if condition is true, this block will be executed
@@ -416,14 +453,19 @@ switch (int a = 4; a) {} // switch statement with init statement
 label: // label statement, can be used to jump to this point in the code
 goto label; // goto statement, jumps to the label statement, 
 
-// Reeturn
+// Return
 void function() {
 	return; // return statement, exits the function without returning a value when the function is void
 	int a = 9; // statement after return will not be executed
 }
 int function() { return 5; } // return statement with value, exits the function and returns the value
 
-// === Loop statements ===
+
+
+// =====================================
+// ========== LOOP STATEMENTS ==========
+// =====================================
+
 // For Loop
 for (int x = 0; x < 10; ++x) { // for loop, braces are optional if the body has only one statement
 	// code will be executed 10 times
@@ -455,7 +497,11 @@ do { // do-while loop, braces are optional if the body has only one statement
 } while (true); // condition is checked after the loop body
 
 
-// === Lambdas ===
+
+// =============================
+// ========== LAMBDAS ==========
+// =============================
+
 // Capture
 auto lambda = [](){}; // lambda expression, with no capture, no parameters and empty body
 auto lambda = []{}; // the parentheses are optional if there are no parameters
@@ -483,7 +529,11 @@ auto lambda = [](auto a, auto b) -> int { return a + b; }; // lambda expression 
 lambda(1, 2); // calling the lambda 
 
 
-// === Namespaces ===
+
+// ================================
+// ========== NAMESPACES ==========
+// ================================
+
 namespace Namespace { // namespace definition 
 	int a; // member dclaration
 	namespace Nested {} // nested namespace definition
@@ -506,8 +556,14 @@ y = 30; // accessing unnamed namespace member
 
 using Namespace::a, Namespace::Nested::b; // using declaration, introduces one or more members of the namespace into the enclosing scope to be accessed directly
 using namespace Namespace; // using namespace declaration, introduces all members of the namespace into the enclosing scope
+namespace new_name = Namespace; // namespace alias declaration, creates an alias for the namespace
 
-// === Using ===
+
+
+// ===========================
+// ========== USING ==========
+// ===========================
+
 typedef int my_int, *my_int_ptr, &my_int_ref; // typedef declaration, creates an alias name for int called my_int, for pointer to int called my_int_ptr, for reference to int called my_int_ref
 typedef struct { int x; int y; } my_struct; // unamed struct typedef, declares a struct and gives it a name my_struct
 using my_alias = int; // alias declaration, creates an alias name for int called my_alias
@@ -515,7 +571,12 @@ for (typedef int my_type; my_type x : std::vector{1, 2, 3}); // typedef as a sta
 for (using my_type = int; my_type x : std::vector{1, 2, 3}); // using as a statment
 
 
-// === User Defined Literals === return type can be anything, suffix can be any identifier, preferably preceded by _ to not conflict future standard literals
+
+// ===========================================
+// ========== USER DEFINED LITERALS ==========
+// ===========================================
+
+// return type can be anything, suffix can be any identifier, preferably preceded by _ to not conflict with future standard literals
 int operator""my_int_x10(unsigned long long int value) { // user defined literal for int
 	return value * 10; 
 }
@@ -536,7 +597,11 @@ template <char... chars> int operator""_char_count() { // user defined literal f
 }
 
 
-// === Attributes ===
+
+// ================================
+// ========== ATTRIBUTES ==========
+// ================================
+
 [[deprecated("reason")]] int deprecated_function(); // deprecated attribute, marks the function as deprecated, compiler will warn if used, the reason is optional
 [[nodiscard("reason")]] int nodiscard_function(); // nodiscard attribute, compiler will warn if the return value is not used, the reason is optional
 [[maybe_unused]] int maybe_unused_var; // maybe_unused attribute, compiler will not warn if the variable is not used, usefull when compiling with flags that treat warnings as errors
@@ -557,7 +622,11 @@ int function(int x) {
 [[noreturn]] void noreturn_function(); // noreturn attribute, tells the compiler that the function will not return to it's caller
 
 
-// === Type Casting ===
+
+// ==================================
+// ========== TYPE CASTING ==========
+// ==================================
+
 static_cast<int>(1.5); // static cast, compile time checked, can be used for any type of valid cast
 
 struct Base { ~Base() {} }; struct Derived : Base {};
@@ -576,7 +645,11 @@ int result = *reinterpret_cast<int*>((char []){'a', 'b', 'c', 'd'}); // reinterp
 float(1.5); // functional cast, calls the conversion operator of the the value, if not available it will call the constructor of the new type
 
 
-// === Coroutines ===
+
+// ================================
+// ========== COROUTINES ==========
+// ================================
+
 #include <coroutine> // for std::coroutine_handle
 struct Awaitable { // awaitable type, returned by the co_await expression
 	bool await_ready() noexcept { return false; } // returns true if the coroutine should be suspended, false if it should continue, it is called when the co_await expression is evaluated
@@ -611,12 +684,20 @@ coroutine.handle.destroy(); // destroys the coroutine when it's finished
 coroutine.handle.promise(); // gets the promise object of the coroutine
 
 
-// === Concepts ===
+
+// ==============================
+// ========== CONCEPTS ==========
+// ==============================
+
 template <typename T> concept AlwaysTrue = true; // concept definition, the right side must be a constant expression convertible to bool
 constexpr bool result = AlwaysTrue<int>; // concept usage, pass all the template parameters to the concept, and it returns true or false
 
 
-// === Requires ===
+
+// ==============================
+// ========== REQUIRES ==========
+// ==============================
+
 constexpr bool result = requires { // requires expression, will return true if all the statements inside the braces are valid c++ code, otherwise false
 	sizeof(int) == 1; // valid expression
 	{ int(1.4) } -> std::same_as<int>; // valid expression, also checks the result type of the expression using a concept, braces are mandatory here
@@ -631,17 +712,31 @@ template <typename T> void function(T t) requires Return<T> and true; // postfix
 template <typename T> void function(T t) requires requires(T t) { t.method(); } or Param<T> and requires { T::method(); }; // the expression of the requires clause can be or contain a requires expressions with or without parameters, same for prefix form
 template <typename T> requires std::same_as<T, int> and requires { T::method(); } struct S; // requires clause in class definition, the class will not be defined if the expression is false
 
-// === Static Assertions ===
+
+
+// =======================================
+// ========== STATIC ASSERTIONS ==========
+// =======================================
+
 static_assert(sizeof(int) == 4, "int must be 4 bytes"); // static assertion, will cause a compilation error if the constant expression convertible to bool is false, the second argument is the error message
 static_assert(AlwaysTrue<int>); // static assertion with no message
 static_assert(true, std::string("message: ") + "user generated error message"); // static assertion with user generated message, the message object must have a size() method returning a size_t and a data() method returning a const char* or char* pointer 
 
-// === Decltype Specifier ===
+
+
+// ==============================
+// ========== DECLTYPE ==========
+// ==============================
+
 decltype(1 + 2) const var; // decltype specifier, deduces the type of the expression without evaluating it which can be used in a declaration
 decltype(var) var2; // decltype deduces cv-qualifiers and references unlike auto
 
 
-// === Templates ===
+
+// ===============================
+// ========== TEMPLATES ==========
+// ===============================
+
 // template function
 template <typename T, class U> T template_function(U); // template function declaration, can use typename or class, template parameters can be used in return type, parameters, or insied the function, the function will only exist if it is instanciated
 template <typename... Types> void template_parameter_pack(Types...); // template parameter pack, can be used to declare parameter pack
@@ -676,7 +771,11 @@ template_class(int) -> template_class<int, double>; // deduction guide with no t
 template <typename T> T zero_var = T(0); // template variable, can be used to create a variable of a specific type, all previous template features work for variables too
 
 
-// === Exceptions ===
+
+// ================================
+// ========== EXCEPTIONS ==========
+// ================================
+
 try { // try block, allows catching exceptions in catch blocks
 	throw std::runtime_error(); // throw expression, any type can be thrown, in this case the exception might be caught by the catch blocks of this try block 
 } catch (const std::exception& e) { // catch block for exception of type std::exception
@@ -696,7 +795,11 @@ struct Constructor_try {
 };
 
 
-// === Fold Expressions ===
+
+// ======================================
+// ========== FOLD EXPRESSIONS ==========
+// ======================================
+
 void function(auto... pack) {
 	(pack + ...); // unary left fold expression, expands to : (((pack1) + pack2) + ...) 
 	(... + pack); // unary right fold expression, expands to : (pack1 + (pack2 + ...))
@@ -705,7 +808,11 @@ void function(auto... pack) {
 }
 
 
-// === Preprocessor Directives ===
+
+// =============================================
+// ========== PREPROCESSOR DIRECTIVES ==========
+// =============================================
+
 #define DEBUG // empty macro definition, useful with #ifdef checking
 #define PI 3.14159 // variable macro definiton, will replace all instances of PI with 3.14159
 #define SQUARE(x) ((x) * (x)) // function macro definition, can take any number of arguments, will be replaced with the body of the function
