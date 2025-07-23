@@ -6,15 +6,14 @@
 #include <coroutine> // for coroutines
 
 struct S {
-	S(const S& s) {
-		rmz::println("copy constructor called");
+	int x = 9;
+	operator bool() {
+		return x != 0;
 	}
-	S() = default;
 };
 
 int main() {
-
-	S x;
-	auto y = auto{S()}; 
-
+	if (auto&& [x] = S{}) {
+		rmz::print("x: {}\n", x);
+	}
 }

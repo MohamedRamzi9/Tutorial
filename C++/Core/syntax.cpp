@@ -3,6 +3,7 @@
 struct MyStruct { 
 	int x, y;
 	void method() {}
+	operator bool() { return true; }
 } object, *object_ptr;
 int function(int a);
 template <class s> concept always_true = true; 
@@ -224,19 +225,33 @@ int alignof_result = alignof(int); // alignof operator, returns alignment of typ
 #include <typeinfo> // for std::type_info
 const std::type_info& typeid_result = typeid(int), typeid(1 + 2); // typeid operator, returns
 
-// New and Delete, needs more refinement 
-char* char_ptr = new char; // with no arguments parentheses are optional
-char* char_ptr = ::new char; // explicitly call the global new operator
-char* char_ptr = new char('a'); // direct initialization
-char* char_ptr = new (char_ptr)char; // placement new, constructs an object in the memory pointed by char_ptr
-delete char_ptr; // unallocate the variable
-delete[] char_array_ptr; // unallocate the array
+// New and Delete
+char* simple_new = new char; // new expression, with no arguments, parentheses are optional, throws std::bad_alloc if allocation fails
+char* char_array_ptr = new char[10]; // new array, allocates an array of type with given size
+char* global_new = ::new char; // explicitly call the global new operator
+char* new_init = new char('a'); // direct initialization, for all following versions, constructor parameters are optional and always come after the type
+char* placement_new = new (nullptr)char; // placement new, constructs an object in the existing memory pointed by the argument
+char* nothrow_new = new (std::nothrow) char; // nothrow new, returns nullptr if allocation fails instead of throwing an exception
+char* aligned_new = new (std::align_val_t(16)) char; // aligned new, allocates memory with specified alignment, must be a power of 2
+char* aligned_nothrow_new = new (std::align_val_t(16), std::nothrow) char; // aligned nothrow new, the same as aligned new but returns nullptr if allocation fails
+delete simple_new; // delete expression, deallocates the variable and calls the destructor if it has one
+delete[] char_array_ptr; // array delete, deallocates an array, calls the destructor for each element
+// same versions of all the above exist for new[] and delete[] expressions
+
+// Overloading New and Delete Operators
+void* operator new(std::size_t size) { return ::operator new[](size); } // overload new operator, this is the version with no arguments, called via new type, must return void*, and first parameter is always std::size_t which is the size to allocate, memory inside is allocated using global new operator or malloc
+void* operator new(std::size_t size, int arg1, char arg2, auto&&... args) { return nullptr; } // overload new operator with additional parameters, they can be any type and any number, it's called via new(arguments...) type
+void operator delete(void* ptr) noexcept { ::operator delete[](ptr); } // overload delete operator, this is the version with no arguments, must be noexcept, return type must void, called via delete ptr or when constructor throws in the new function with the same list of additional argument as this operator, first parameter is always void* which receives the pointer to be deallocated, memory inside is deallocated using global delete operator or free
+void operator delete(void* ptr, auto&&... args) noexcept { ::operator delete[](ptr); } //overload delete operator with additional parameters, called either via delete(arg...) ptr or when constructor throws in the new function with the same list of additional argument as this operator
+// the same versions of all the above exist for new[] and delete[] operators
+
 
 bool does_throw = noexcept(1 + 2); // noexcept operator
 
 int x = Namespace::x; // scope resolution operator, can be used on namespaces, classes, enums
 
 int y = auto(x), auto{x}, auto(1); // auto() and auto{} decay copy, will create a copy of x if x is not an rvalue, otherwise returns x itself
+
 
 
 // ===============================
@@ -421,6 +436,8 @@ if constexpr (true) { // if constexpr statement, evaluated at compile time
 } else { // else statement, optional, 
 	// if condition is false, this block will be added to the program, else it will be removed
 }
+
+if (auto&& [x, y] = MyStruct{1, 2}); // structured binding decalration as a condition, will call operator bool on the object to determine if the condition is true or false
 
 if constexpr (constexpr int a = 4; a < 4); // if constexpr statement with init statement, evaluated at compile time
 

@@ -68,8 +68,7 @@
 	1. sizeof sizeof...
 	1. alignof 
 	1. typeid
-	1. new, placement new,
-		// finish the new section ❌❌❌
+	1. new, new[], placement new,
 	1. delete delete[]
 	1. noexcept
 	1. scope resolution operator
@@ -163,7 +162,7 @@
 1. control statements
 	1. if else
 		1. if init statment
-		1. structured binding declaration as condition ❌❌❌
+		1. structured binding declaration as condition 
 	1. if constexpr else
 		1. if constexpr init statement
 	1. if consteval else
@@ -278,7 +277,7 @@
 1. fold expressions
 	1. unary fold expressions (left and right)
 	1. binary fold expressions (left and right)
-1. preprocessor directives🟢🟢🟢
+1. preprocessor directives
 	1. #define
 		1. empty macro
 		1. variable macro
@@ -297,7 +296,7 @@
 	1. #warning
 	1. #pragma
 		1. once
-1. modules 
+1. modules 🟢🟢🟢
 	1. module declaration
 	1. module import
 	1. module export
