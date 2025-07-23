@@ -17,6 +17,11 @@ list_var = [2, 3, 4]
 # =======================================
 
 
+
+# ==============================
+# ========== COMMENTS ==========
+# ==============================
+
 # This is a comment
 
 """
@@ -24,7 +29,11 @@ This is a multi-line comment
 It can span multiple lines
 """
 
-# Variable assignments
+
+# ==============================
+# ========== VARIABLE ==========
+# ==============================
+
 int_var = 8
 int_var = 0o353
 int_var = 0x1A3F
@@ -66,7 +75,11 @@ a = b = 7
 a: int = 5
 
 
-# Operators
+
+# ===============================
+# ========== OPERATORS ==========
+# ===============================
+
 # Arithmetic operators
 add_result = 5 + 3
 sub_result = 5 - 3
@@ -132,7 +145,11 @@ slice_result = list_var[::2]
 slice_result = list_var[::-1]  
 
 
-# Control statements
+
+# =======================================
+# ========== CONTROL STATMENTS ==========
+# =======================================
+
 # If statement
 if int_var > 5:
 	int_var += 1
@@ -156,7 +173,11 @@ match var:
 	case _: pass
 
 
-# Loop statements
+
+# =====================================
+# ========== LOOP STATEMENTS ==========
+# =====================================
+
 # For loop
 sum = 0
 for item in list_var:
@@ -179,7 +200,11 @@ else: # Executed if loop completes without break
 	int_var = 20
 
 
-# Exception
+
+# ===============================
+# ========== EXCEPTION ==========
+# ===============================
+
 # Exception handling
 try:
 	int_var = 10 / 0
@@ -196,13 +221,26 @@ finally: # Always executed
 # raise ValueError("This is a value error")
 
 
-# Assertion
+
+# ================================
+# ========== ASSERTIONS ==========
+# ================================
+
 assert int_var > 0, "int_var must be greater than 0"
 
 
-# Delete statement
+
+# ============================
+# ========== DELETE ==========
+# ============================
+
 del int_var  # Deletes the variable int_var
 
+
+
+# ===============================
+# ========== FUNCTIONS ==========
+# ===============================
 
 # Function definitions with return
 def function_with_args(arg1: int, arg2=10, *args, **kwargs) -> int:
@@ -227,12 +265,20 @@ def function_with_global_and_nonlocal():
 	nested_function()
 
 
-# Lambda function
+
+# =============================
+# ========== LAMBDAS ==========
+# =============================
+
 lambda_with_args = lambda x, y: x + y
 lambda_no_args = lambda: 42
 
 
-# Class definitions
+
+# =============================
+# ========== CLASSES ==========
+# =============================
+
 class Base:
 	static = 10
 	def __init__(self, value):
@@ -304,7 +350,11 @@ class GrandDerived(Derived, Base):
 		return super().method() # Call the method from the base class in the order of inheritance
 
 
-# Decorators
+
+# ================================
+# ========== DECORATORS ==========
+# ================================
+
 # Function decorator with no arguments
 def decorator(func):
 	def wrapper(*args, **kwargs):
@@ -372,7 +422,11 @@ class DecoratedClass:
 		return x + y
 
 
-# Generator functions
+
+# ================================
+# ========== GENERATORS ==========
+# ================================
+
 def generator_function(x):
 	for i in range(x):
 		yield i * 2  

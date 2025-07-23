@@ -236,6 +236,7 @@ bool does_throw = noexcept(1 + 2); // noexcept operator
 
 int x = Namespace::x; // scope resolution operator, can be used on namespaces, classes, enums
 
+int y = auto(x), auto{x}, auto(1); // auto() and auto{} decay copy, will create a copy of x if x is not an rvalue, otherwise returns x itself
 
 
 // ===============================

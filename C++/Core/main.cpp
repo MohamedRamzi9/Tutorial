@@ -5,10 +5,16 @@
 #include <vector>
 #include <coroutine> // for coroutines
 
-struct S {int x, y, z;};
+struct S {
+	S(const S& s) {
+		rmz::println("copy constructor called");
+	}
+	S() = default;
+};
 
 int main() {
 
-	auto [a, _, _] = S{1, 2, 3}; // structured binding to unpack S into pack
+	S x;
+	auto y = auto{S()}; 
 
 }

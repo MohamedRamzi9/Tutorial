@@ -73,6 +73,7 @@
 	1. delete delete[]
 	1. noexcept
 	1. scope resolution operator
+	1. auto() and auto{}
 1. Functions
 	1. Function declaration
 		1. return type
