@@ -864,3 +864,27 @@ __LINE__, __FILE__, __DATE__, __TIME__, __func__, __cplusplus // predefined macr
 #elif false // elif directive, optional, will only match if the expression is true and the previous directive was not matched
 // this code will be included for the elif directive
 #endif // end of if directive, mandatory
+
+
+
+// =============================
+// ========== MODULES ==========
+// =============================
+
+export module A; // module interface unit declaration, can appear only in one module file and must be the first declaration in that file, the name can be anything, and no other module declaration can appear in the same file 
+module A; // module implementation unit declaration, can be appear in multiple files, the name must be the same as the module interface unit, allows this module to access all declarations and definitions in the module interface unit as well as all module implementation units of the same module, cannot contain any export declarations
+module A.B.C; // module names can be a hierarchy of names separated by a dot, doesn't have any special meaning
+
+module; // global module declaration, used when including headers
+#include <iostream>; // all headers included in a module go here
+export module A; // module interface or implementation unit declaration, also marks the end of the global module declaration
+
+export int module_variable = 42; // module export declaration, can be used to export any type of declaration or definition which can be accessed from other translation units that import this module
+export { // module block export declaration, can be used to export multiple declarations or definitions at once 
+	int module_function();
+	float module_variable;
+}
+
+import A; // module import declaration, allows access to all exported declarations and definitions from the module A and all its partitions
+export import A; // module export import declaration, same as the previous one but also exports all the imported declarations and definitions
+

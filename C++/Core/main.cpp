@@ -5,6 +5,8 @@
 #include <vector>
 #include <coroutine> // for coroutines
 
+import Module;
+
 struct S {
 	int x = 9;
 	operator bool() {
@@ -13,7 +15,5 @@ struct S {
 };
 
 int main() {
-	if (auto&& [x] = S{}) {
-		rmz::print("x: {}\n", x);
-	}
+	rmz::println("module var {}", module_variable);
 }
