@@ -298,8 +298,19 @@
 		1. once
 1. modules 🟢🟢🟢
 	1. module declaration
+		1. module interface unit
+		1. module implementation unit
+		1. module partition
+		1. global module fragment
+	1. export declaration
+		1. export identifier
+		1. export block
 	1. module import
-	1. module export
+		1. import declaration
+		1. import export declaration
+		1. partition import declaration
+		1. partition export import declaration
+	1. private module fragment ❌❌❌
 1. asm declaration
 1. contracts ❌❌❌
 1. expansion statements ❌❌❌
