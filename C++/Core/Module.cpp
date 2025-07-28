@@ -1,4 +1,6 @@
 
 export module Module; 
-export import :Partion1;
-export import :Partion2; 
+
+extern float module_variable1;
+
+export float module_variable = module_variable1;

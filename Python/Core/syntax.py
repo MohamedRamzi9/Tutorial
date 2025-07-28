@@ -1,5 +1,6 @@
-
-
+# ============================
+# ========== IGNORE ==========
+# ============================
 class Class:
 	var = 5
 	def method(self): pass
@@ -14,7 +15,11 @@ obj_var1 = Class()
 obj_var2 = Class()
 list_var = [2, 3, 4]
 
-# =======================================
+
+
+# ================================
+# ========== START HERE ==========
+# ================================
 
 
 
@@ -22,57 +27,58 @@ list_var = [2, 3, 4]
 # ========== COMMENTS ==========
 # ==============================
 
-# This is a comment
+# This is a comment, will be ignored by the interpreter
 
-"""
-This is a multi-line comment
+""" 
+This is a multi-line string
 It can span multiple lines
+can be used as a comment when not assigned to a variable
 """
+
 
 
 # ==============================
 # ========== VARIABLE ==========
 # ==============================
 
-int_var = 8
-int_var = 0o353
-int_var = 0x1A3F
-int_var = 0b101010
+var = 5 # variable declaration, can be any valid identifier, 
 
-str_var = '9'
-str_var = "Hello, World!"
-str_var = f'Formatted string with value: {int_var}'
-str_var = r'Raw string with backslash \n not interpreted'
+int_var = 8 # decimal literal
+int_var = 0o353 # octal literal
+int_var = 0x1A3F # hexadecimal literal
+int_var = 0b101010 # binary literal
+
+str_var = '9' # string literal
+str_var = "Hello, World!" # also string literal
+str_var = f'Formatted string with value: {int_var}' # formatted string, starts with f, and any expression inside curly braces will be evaluated and inserted into the string after calling str() on the result
+str_var = r'Raw string with backslash \n not interpreted' # raw string, starts with r, and any escape sequences will be treated as literal characters
 str_var = '''This is a
 multi-line string
 using triple quotes.
 '''
-str_var = fr'''Multi line formatted raw string with value: {int_var} 
-and backslash \n not interpreted'''
+str_var = fr"""Multi line formatted raw string with value: {int_var} 
+and escape sequences not interpreted"""
 
-float_var = 10.0
-float_var = 1.34340e5
-float_var = 1.34340E5
+float_var = 10.0 # float literal
+float_var = 1.34340e5 # float literal with scientific notation
+float_var = 1.34340E5 # same as above
 
-bool_var = True
-bool_var = False
+bool_var = True # boolean literal true
+bool_var = False # boolean literal false
 
-none_var = None
-ellipsis_var = ...
+none_var = None # NoneType literal
+ellipsis_var = ... # Ellipsis literal
 
 list_var = [1, 2, 3]  # List
 tuple_var = (1, 2, 3)  # Tuple
 set_var = {1, 2, 3}  # Set
 dict_var = {'key': 'value'}  # Dictionary
 
-# Variable declaration with tuple unpacking
-a, b = 5, 6
+a, b = 5, 6 # variable declaration with tuple unpacking
 
-# Variable declaration with multiple assignments
-a = b = 7
+a = b = 7 # variable declaration with multiple assignments, starts from the rightmost value and assigns the value to all variables on the left
 
-# Variable declaration with type hints
-a: int = 5
+a: int = 5 # variable declaration with type hints, helps the interpreter and IDEs to understand the type of the variable
 
 
 
@@ -81,68 +87,59 @@ a: int = 5
 # ===============================
 
 # Arithmetic operators
-add_result = 5 + 3
-sub_result = 5 - 3
-mul_result = 5 * 3
-div_result = 5 / 3
-floor_div_result = 5 // 3
-exp_result = 5 ** 3
-mod_result = 5 % 3
+add_result = 5 + 3 # addition
+sub_result = 5 - 3 # subtraction
+mul_result = 5 * 3 # multiplication
+div_result = 5 / 3 # decimal division
+floor_div_result = 5 // 3 # floor division, returns the integer part of the division
+exp_result = 5 ** 3 # exponentiation, raises the first number to the power of the second number
+mod_result = 5 % 3 # modulus, returns the remainder of the division
 
 # Comparison operators
-eq_result = 5 == 3
-ne_result = 5 != 3
-lt_result = 5 < 3
-gt_result = 5 > 3
-le_result = 5 <= 3
-ge_result = 5 >= 3
+eq_result = 5 == 3 # equality
+ne_result = 5 != 3 # inequality
+lt_result = 5 < 3 # less than
+gt_result = 5 > 3 # greater than
+le_result = 5 <= 3 # less than or equal to
+ge_result = 5 >= 3 # greater than or equal to
 
-# Comparison chaining
-chaining_result = 1 < a < 3
+chaining_result = 1 < a < 3 # comparison chaining, starts from the leftmost 2 operands and compares them, then use the result of that and compare it with the next operand etc...
 
 # Logical operators
-and_result = True and False
-and_result = obj_var1 & obj_var2
-
-or_result = True or False
-or_result = obj_var1 | obj_var2
-
-not_result = not True
+and_result = True and False # logical AND, returns True if both operands are True, and false if the first operand is False or it's true and the second operand is False, not overloadable
+or_result = True or False # logical OR, returns True if the first operand is True or it's false and the second operand is True, and False if both operands are False, not overloadable
+not_result = not True # logical NOT, returns True if the operand is False, or false if the operand is True
 
 # Bitwise operators
-bit_and_result = 5 & 3
-bit_or_result = 5 | 3
-bit_xor_result = 5 ^ 3
-bit_not_result = ~5
-bit_left_shift_result = 5 << 1
-bit_right_shift_result = 5 >> 1
+bit_and_result = 5 & 3 # bitwise AND
+bit_or_result = 5 | 3 # bitwise OR 
+bit_xor_result = 5 ^ 3 # bitwise XOR
+bit_not_result = ~5 # bitwise Complement
+bit_left_shift_result = 5 << 1 # bitwise left shift
+bit_right_shift_result = 5 >> 1 # bitwise right shift
 
 # Membership access operator
 obj_var1.var = 10
 obj_var1.method()
 
-# Walrus operator
-walrus_result = (x := 5) + 10
+walrus_result = (x := 5) + 10 # walrus operator, allows assignment and returns that value in a single expression
 
-# Is operator
-is_result = obj_var1 is obj_var2
-is_not_result = obj_var1 is not obj_var2
+is_result = obj_var1 is obj_var2 # is operator, checks if both variables point to the same object in memory
+is_not_result = obj_var1 is not obj_var2 # is not operator, checks if both variables do not point to the same object in memory
 
-# In operator
-in_result = 5 in [1, 2, 3, 4, 5]
-not_in_result = 5 not in [1, 2, 3, 4, 5]
+in_result = 5 in [1, 2, 3, 4, 5] # in operator, checks if the value is present in the iterable
+not_in_result = 5 not in [1, 2, 3, 4, 5] # not in operator, checks if the value is not present in the iterable
 
-# Subscript operator
-subscript_result = list_var[2]
-obj_var1[1, 3]
+subscript_result = list_var[2] # subscript operator, arguments can be any valid expression 
+obj_var1[1, 3] # subscript operator with multiple indices separated by commas
 
-# Slice operator
-slice_result = list_var[1:3]  
-slice_result = list_var[1:]
-slice_result = list_var[:3]
-slice_result = list_var[:]
-slice_result = list_var[::2]
-slice_result = list_var[::-1]  
+# slice operator
+slice_result = list_var[1:3] # slice from [1, 3) (inclusive of 1, exclusive of 3)  
+slice_result = list_var[1:] # slice from [1, end of object)
+slice_result = list_var[:3] # slice from [beginning of object, 3) 
+slice_result = list_var[:] # slice from [beginning of object, end of object)
+slice_result = list_var[::2] # specify step, works with all previous slices, used to skip elements if step is greater than 1
+slice_result = list_var[::-1] # reverse step, will swap the beginning and end indices of the slice, and use the step as the previous version
 
 
 
@@ -150,27 +147,24 @@ slice_result = list_var[::-1]
 # ========== CONTROL STATMENTS ==========
 # =======================================
 
-# If statement
-if int_var > 5:
-	int_var += 1
-elif int_var < 5:
-	int_var -= 1
-else:
+if int_var > 5: # if statement, checks the condition if it is True
+	int_var += 1 # if block, executed if the condition is True
+elif int_var < 5: # elif statement, optional, checks another condition if the previous one is False
+	int_var -= 1 # elif block, executed if the condition is True
+else: # else statement, executed if all previous conditions are False
 	int_var = 5
 
-# Inline if statement
-int_var = 10 if int_var > 5 else 0
+int_var = 10 if int_var > 5 else 0 # inline if statement, returns the first value before the if keyword if the condition is True, otherwise returns the second value after the else keyword
 
-# With statement
-with obj_var1 as context:
+with obj_var1 as context: # with statement, calls the __enter__ method of the object at the beginning, if the as part is present assign the return value of __enter__ to the variable context, 
 	context.method()
+	# calls the __exit__ method of the object at the end of the block, passing any exception that occurred in the block as arguments to the method, if no exception occurred, exc_type, exc_value, and traceback will be None
 
-# Match statement
 var = (1, [2, 3])
-match var:
-	case 4: pass
+match var: # match statement, matches the type and value of all nested data members in the object with the patterns in the case blocks
+	case 4: pass # case block, executed if the pattern matches the value of the variable
 	case (1, [2, 3]): pass
-	case _: pass
+	case _: pass # default case block, executed if no other case matches
 
 
 
@@ -178,25 +172,22 @@ match var:
 # ========== LOOP STATEMENTS ==========
 # =====================================
 
-# For loop
-sum = 0
-for item in list_var:
-	if item < 3:
-		continue
+for item in list_var: # for loop, iterates over each item in the object that implements the iterable protocol and put the value in the loop variable 
+	if item < 3: # use the value as any variable
+		continue # continue statement, skips the rest of the loop body and goes to the next iteration
 	elif item == -1:
-		break
-	sum = item + 1
-else: # Executed if loop completes without break
-	sum = 10
+		break # break statement, exits the loop immediately
+	print(item)
+else: # else block, executed if the loop completes all iterations without break
+	print("Loop completed without break")
 
-# While loop
-while int_var < 10:
+while int_var < 10: # while loop, continues as long as the condition is True
 	if int_var < 8:
-		continue
+		continue # continue statement, same as for loop
 	elif int_var == -1:
-		break
+		break # break statement, same as for loop
 	int_var += 1
-else: # Executed if loop completes without break
+else: # else block, executed if loop completes without break
 	int_var = 20
 
 
@@ -205,20 +196,18 @@ else: # Executed if loop completes without break
 # ========== EXCEPTION ==========
 # ===============================
 
-# Exception handling
-try:
+try: # try block, contains code that may raise an exception
 	int_var = 10 / 0
-except ZeroDivisionError as e: # Catching specific exception
+except ZeroDivisionError as e: # catch block, catches the exception raised in the try block, will get the exception object as e of the specified type or its derived types
 	int_var = 0
-except Exception as e: # Catching general exception
+except Exception as e: # catch any exception, cause all exceptions inherit from Exception
 	int_var = -1
-else: # Executed if no exception occurs
+else: # else block, executed if no exception occurs in the try block
 	int_var = 50
-finally: # Always executed
+finally: # finally block, always executed regardless of whether an exception occurs or not
 	int_var = 100
 
-# Raising exceptions
-# raise ValueError("This is a value error")
+raise ValueError("This is a value error") # raise statement, raises an exception of the specified type
 
 
 
@@ -226,7 +215,7 @@ finally: # Always executed
 # ========== ASSERTIONS ==========
 # ================================
 
-assert int_var > 0, "int_var must be greater than 0"
+assert int_var > 0, "int_var must be greater than 0" # assert statement, raises AssertionError if the condition is False, error message is optional
 
 
 
@@ -234,7 +223,7 @@ assert int_var > 0, "int_var must be greater than 0"
 # ========== DELETE ==========
 # ============================
 
-del int_var  # Deletes the variable int_var
+del int_var  # deletes keyword, removes the variable 
 
 
 
@@ -242,27 +231,44 @@ del int_var  # Deletes the variable int_var
 # ========== FUNCTIONS ==========
 # ===============================
 
-# Function definitions with return
-def function_with_args(arg1: int, arg2=10, *args, **kwargs) -> int:
-	"""Function with positional and keyword arguments."""
+def function(): pass # function with no arguments and no return value, will return None if no return statement is used
+def function_return(): # function with no arguments and a return value, any code after return statement is unreachable if it is executed
+	return 42 # return statement with a single value
+	return 1, 3, 4 # return statement with multiple values, returns a tuple containing the values
+def function_return_hint() -> int: # function return with type hint, indicates the retrun type
+	return 42
+
+def function_args(arg1, arg2, arg3): # function with mandatory arguments
+	return arg1 + arg2 + arg3 # can be used in function body
+def function_default_args(arg=None): # function with default argument, if no value is passed when calling the function, will use the default value
+	return 0 if arg is None else 4 
+def function_positional_args(*args): # function with positional arguments, args is a tuple containing all the arguments passed to the function other than the mandatory ones
+	return sum(args) # can be used as a tuple in the function body
+def function_keyword_args(**kwargs): # function with keyword arguments, kwargs is a dictionary containing all the keyword arguments passed to the function as a key=value pair
+	return sum(kwargs.values()) # can be used as a dictionary in the function body
+def function_args_order(arg1, arg2=10, *args, **kwargs): # this is the order of arguments in a function definition: mandatory arguments, default arguments, positional arguments (*args), keyword arguments (**kwargs), any of these can be omitted
 	return arg1 + arg2 + sum(args) + sum(kwargs.values())
 
-# Function with no return
-def function_with_no_return() -> None:
-	pass
-	return None
+function_args(1, 2, 3) # function call with mandatory arguments
+function_default_args() # function call with default argument
+function_default_args(2) # function call with default argument but passing a value
+function_positional_args(1, 2, 3, 4, 5) # function call with positional arguments, arguments can be any number of value separated by commas
+function_keyword_args(arg1=1, arg2=2, arg3=3) # function call with keyword arguments, arguments are passed as key=value pairs separated by commas
+function_args_order("arg1", "default", "pos1", "pos2", key1="value1", key2="value2") # function call with all types of arguments, the first argument is mandatory, the second is default, the third and fourth are positional, and the last two are keyword arguments
+function_args(*("pos1")) # function call with tuple unpacking, the number of values in the tuple must match the number of arguments that they occupy
+function_args(**{"args": "value1"}) # function call with dictionary unpacking, the keys in the dictionary and number of values must match the names of the function arguments that they occupy  
 
 a = 5
-def function_with_global_and_nonlocal():
-	global a  # uses global variable a
+def function_global_nonlocal():
+	global a  # uses variable a from the global scope
 	a += 1  # modifies global variable a
-	b = a
-	def nested_function():
-		nonlocal b
-		global a
-		b += 1
-		a += 2
-	nested_function()
+	b = a # declares a local variable b
+	def nested_function(): # nested function definition, only accessible within this function
+		nonlocal b # uses variable b from the enclosing function scope 
+		global a # uses variable a from the global scope
+		b += 1 # modifies local variable b of enclosing function scope
+		a += 2 # modifies global variable a
+	nested_function() # calling the nested function
 
 
 
@@ -270,8 +276,8 @@ def function_with_global_and_nonlocal():
 # ========== LAMBDAS ==========
 # =============================
 
-lambda_with_args = lambda x, y: x + y
-lambda_no_args = lambda: 42
+lambda_with_args = lambda x, y: x + y # lambda definition with arguments, can be used called like a regular function, the args come before the : and the body must be a single expression with no return statement, the result of the expression is returned automatically
+lambda_no_args = lambda: 42 # lambda definition with no arguments
 
 
 
@@ -279,75 +285,66 @@ lambda_no_args = lambda: 42
 # ========== CLASSES ==========
 # =============================
 
-class Base:
-	static = 10
-	def __init__(self, value):
-		self.value = value
-	def method(self):
+class Base: # class definition
+	static = 10 # static data member, shared by all instances of the class
+	def __init__(self, value): # __init__ method, called when creating an instance of the class to initialize the instance, self is a reference to the instance being created, can be any name
+		self.value = value # adding a data member to the instance if that name does not already exist, since objects are similar to dictionaries
+	def method(self): # method definition, can be called on the instance
 		return self.value
-	@staticmethod
-	def static_method():
+	@staticmethod # static method decorator used to static methods
+	def static_method(): # static method, does not take a first argument by default, can be called both on the class and an instance
 		return "This method is called on the class"
-	@classmethod
-	def class_method(cls):
+	@classmethod # class method decorator used to define class methods
+	def class_method(cls): # class method, takes the class that this method is called on as the first argument (important when using inheritance)
 		return "This method is called on the class and takes the class as the first argument"
-	def __str__(self): # Called when using str(obj)
+	def __str__(self): # called when using str(obj)
 		return f"Value: {self.value}"
-	def __repr__(self): # Called when using repr(obj)
+	def __repr__(self): # called when using repr(obj)
 		return str(self)
-	def __add__(self, other): # Called when using obj1 + obj2, can return anything
+	def __add__(self, other): # called when using obj1 + obj2, can return anything
 		return Base(self.value + other.value)
 		# __sub__ -, __mul__ *, __div__ /, __floordiv__ //, __mod__ %, __pow__ **, __lshift__ <<, __rshift__ >>, __and__ &, __or__ |, __xor__ ^
-	def __eq__(self, other): # Called when using obj1 == obj2, can return anything
+	def __eq__(self, other): # called when using obj1 == obj2, can return anything
 		return self.value == other.value
 		# __ne__ !=, __lt__ <, __le__ <=, __gt__ >, __ge__ >=
-	def __call__(self, arg): # Called when using obj()
+	def __call__(self, arg): # called when using obj()
 		self.value += arg
-	def __len__(self): # Called when using len(obj)
+	def __len__(self): # called when using len(obj)
 		return 1
-	def __bool__(self): # Called when using bool(obj)
+	def __bool__(self): # called when using bool(obj)
 		return self.value > 0
-	def __hash__(self): # Called when using hash(obj)
+	def __hash__(self): # called when using hash(obj)
 		return hash(self.value)
-	def __iter__(self): # Called when using iter(obj)
+	def __iter__(self): # called when using iter(obj)
 		return self
-	def __next__(self): # Called when using next(obj)
+	def __next__(self): # called when using next(obj)
 		self.value += 1
 		return self.value
-	def __getitem__(self, key): # Called when using obj[key]
+	def __getitem__(self, key): # called when using obj[key]
 		return self.value + key
-	def __setitem__(self, key, value): # Called when using obj[key] = value
+	def __setitem__(self, key, value): # called when using obj[key] = value
 		self.value = value + key
-	def __delitem__(self, key): # Called when using del obj[key]
+	def __delitem__(self, key): # called when using del obj[key]
 		self.value -= key
-	def __enter__(self): # Called when using with statement
+	def __enter__(self): # called when using with statement 
 		return self
-	def __exit__(self, exc_type, exc_value, traceback): # Called when exiting with statement
+	def __exit__(self, exc_type, exc_value, traceback): # called when exiting the with statement block
 		pass
-	def __contains__(self, item): # Called when using item in obj
+	def __contains__(self, item): # called when using in operator
 		return item == self.value
 	
 # Class inheritance
-class Derived(Base):
-	def __init__(self, value, extra):
-		super().__init__(value)  # Call the constructor of the base class
-		self.extra = extra
-	def method(self):  # Override method from base class
-		return f"{self.value} and {self.extra}"
+class Derived(Base): # class inheritance, base class go in parentheses separated by commas if multiple, the class inherits all methods and data members from the base classes
+	def __init__(self, value, extra): # redefining the __init__ method
+		super().__init__(value) # call base class methods with super()
+		self.extra = extra + self.value # adding accessing base class data members
+	def method(self):  # method overriding, use this method instead of the base class method when called on an instance of this class
+		return f"{self.value} and {super().method()}"  # call the base class method using super() to access the base class method in the order of inheritance
 	def additional_method(self):
 		return f"Extra value: {self.extra}"
 
-# Class instantiation
-base_obj = Base(10)
+base_obj = Base(10) # creating an instance of a class by calling the class like a function
 derived_obj = Derived(20, 12)
-
-# Multiple inheritance
-class GrandDerived(Derived, Base):
-	def __init__(self, value, extra, grand_extra):
-		super().__init__(value, extra)  # Call the constructor of the base class in the order of inheritance
-		self.grand_extra = grand_extra
-	def method(self):  
-		return super().method() # Call the method from the base class in the order of inheritance
 
 
 

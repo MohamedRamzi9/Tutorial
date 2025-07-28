@@ -41,7 +41,7 @@
 	1. raise
 1. assert statement	
 1. del statement
-1. functions
+1. functions ❌❌❌ rewrite this section to match the syntax
 	1. parameters
 		1. pack parameters
 		1. keyword parameters
