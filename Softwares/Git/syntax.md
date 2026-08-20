@@ -18,6 +18,8 @@ git add .    // adds all items in the working directory to staging
 git reset <files>    // removes specific files from staging
 git reset    // removes all items from staging
 git reset --hard    // removes all items from staging and discards all current changes in working directory
+git rm --cached <items>    // removes specific items from staging so they are no longer tracked by git, but keeps them in the working directory
+git rm -r --cached <dir>    // same as above but recursively removes all items in the specified directory from staging
 ```
 
 ### Restoring
