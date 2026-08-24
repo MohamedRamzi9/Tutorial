@@ -10,14 +10,21 @@ package main // used in the main file to indicate that this is the entry point o
 package folder // used in every other file which must be the same name as the folder the file is in
 
 
+// Importing Packages
+import "fmt" // single package import, imports the package with the specified name
+import ( // multiple package import, imports the packages in between the parentheses, each package must be in a new line
+	"time"
+	"sync"
+)
+
+
 
 // ===================================
 // ========== MAIN FUNCTION ==========
 // ===================================
 
 func main() { // the main function is the entry point of the program, { must be in the same line as the function declaration
-
-} // } can go anywhere
+} 
 
 
 
@@ -52,14 +59,17 @@ var variable rune // alias for int32, default initialized to 0, represents a Uni
 var variable complex64 // 64-bit complex number variable, default initialized to (0+0i)
 var variable complex128 // 128-bit complex number variable, default initialized to (0+0i)
 var variable error // error variable, default initialized to nil, used to represent an error condition
-var array[4] int // array variable, fixed size, default initialized to the default value of the type
-var slice[] int // slice variable, dynamic size, default initialized to 🔴🔴🔴
-var map_[string]int // map variable, key-value pairs, default initialized to 🔴🔴🔴
+var array [4]int // array variable, fixed size, default initialized to the default value of the type
+var slice []int // slice variable, dynamic size, default initialized to 🔴🔴🔴
+var map_ [string]int // map variable, key-value pairs, default initialized to 🔴🔴🔴
+var pointer *int // pointer variable, can be any type above or user defined types, default initialized to nil, can be used to store the address of a variable of the same type
 
 [2]int{4, 5} // creates a temporary array for use in assignement or function call, the size must match the number of elements
 [...]int{4, 5} // same as above but the size is inferred from the number of elements
 []int{4, 5} // creates a temporary slice for use in assignement or function call
 map[string]int{"key1": 1, "key2": 2} // creates a temporary map for use in assignement or function call
+
+
 
 // ===============================
 // ========== OPERATORS ==========
@@ -119,6 +129,11 @@ slice... 🔴🔴🔴 // spread operator on slices, where to use is !
 variable := map["key"] // map subscript operator, used to access the value of a map at the specified key, returns the default value of the value type if the key does not exist
 variable, ok := map["key"] // same as above, also returns a boolean indicating if the key exists 
 delete(map, "key") // delete statement, removes the key-value pair from the map with the specified key
+
+pointer = new(int) // new operator, allocates memory for a specific type and returns a pointer to the allocated memory which is initialized to the default value of the type
+*pointer = 10 // dereference operator, access the value at the address stored in the pointer, can be used to assign a value to the address stored in the pointer
+&variable // address operator, returns the address of a variable
+
 
 
 // ========================================
@@ -210,3 +225,108 @@ func function_with_multiple_return() (int, string) { // function declaration wit
 }
 var var3 = function(32, "Hello") // function call with parameters with return value assigned to a variable
 var var1, var2 = function_with_multiple_return() // initialization of multiple variables with the return values of a function
+
+
+
+// =============================
+// ========== STRUCTS ==========
+// =============================
+
+type InnerStruct struct { // struct declaration, used to declare a list of fields, can be accessed from anywhere in the file { must be in the same line as the struct declaration
+	field1 uint8 // struct field declaration
+}
+type OuterStruct struct { 
+	field2 uint8
+	field3 InnerStruct // struct field declaration with another struct type
+	InnerStruct // struct embedding, embeds the fields of a struct into the eclosing struct as if they were declared in the enclosing struct directly
+}
+
+func (s OuterStruct) method() uint8 { // method declaration, same as function declaration except that it has implicit variable s of the struct type that can be used to access the fields of the struct, { must be in the same line as the method declaration
+	return s.field3.field1 //  struct field access of the implicit variable used in the method call
+}
+
+var myStruct OuterStruct // struct variable declaration
+OuterStruct{10, InnerStruct{2}, 11} // struct literal declaration, used to initialize a struct variable with values for its fields, must provide values for all fields in the order of their declaration
+OuterStruct{field1: 10} // same as, but order of fields does not matter and can ommit some of the fields, the omitted fields will be initialized with their default values
+myStruct.field1 // struct field access, used to access the value of a struct field or assigne a value to it
+myStruct.method() // method call, used to call a method of a struct from a struct variable
+
+
+var anonymousStruct = struct { // anonymous struct declaration, used to declare a struct type without a name that is only used in the declaration of a variable of that type
+	field1 uint8
+}{12} // immediate initialization of the anonymous struct variable using a struct literal
+
+
+
+// ================================
+// ========== INTERFACES ==========
+// ================================
+
+type MyInterface interface { // interface declaration, used to declare a set of method signatures that a type must implement to be used as a parameter of a function with that interface type, { must be in the same line as the interface declaration
+	method(uint8) uint8 // method signature, used to declare a method that a type must implement to satisfy the interface, can be any signature
+}
+
+func function_with_interface_param(param MyInterface) {} // function with an interface parameter, can accept any type that implements the methods of the interface
+
+
+
+// =================================
+// ========== GO-ROUTINES ==========
+// =================================
+
+var wg = sync.WaitGroup{} // wait group variable, used to register and wait for the completion of multiple go-routines, must be initialized before use
+func go_routine() { // go-routine declaration, same as regular function but has one or more blocking operations that can be executed concurrently with other go-routines
+	time.Sleep(1 * time.Second) // blocking operation
+	wg.Done() // decrement the go-routine counter by 1, must be called at the end of the go-routine to signal its completion
+}
+wg.Add(1) // increment the go-routine counter by the number of coroutines called, must be done before starting the go-routines
+go go_routine() // go-routine call, used to start a new go-routine that will execute concurrently with the main go-routine and other go-routines, does not block the execution of the main go-routine or other go-routines
+wg.Wait() // wait for all registered go-routines to complete, must be called after starting the go-routines
+
+
+
+// ==============================
+// ========== CHANNELS ==========
+// ==============================
+
+var channel = make(chan int) // channel variable declaration with single value, used to declare a channel that can be used to send and receive values of a specific type from go-routines
+var channel_buffer = make(chan int, 10) // channel variable declaraiton with buffer, same as above but allows the sender go-routine to send multiple values to the channel without blocking waiting for reads until the buffer is full
+
+go channel_send(channel) // call to a go-routine that takes a channel as a parameter before reading from the channel
+var value = <-channel // channel receive operation, reads a value from the channel
+func channel_send(c chan int) { // go-routine that takes a channel of a specific type as a parameter
+	c <- 10 // channel send operation, writes a value to the channel, blocks until the value is read from the channel by some go-routine 
+	close(channel) // channel close operation, closes the channel and signals that no more values will be sent to the channel, must be called by the sender go-routine and not the receiver go-routine
+}
+
+// Channel Range-For statement
+for value := range channel {} // channel range-for loop, continuasly reads values from the channel until it is closed by the sender 
+
+// Channel Select statement 
+select { // channel select statement, allows listening to multiple channels at the same time and executing the block of the first channel that has a value ready
+	case value := <-channel: // select case, will execute its block if the channel has a value ready to be read
+		fmt.print(value) // select case block
+	case value := <-channel_buffer: 
+		fmt.print(value)
+}
+
+
+
+// ==============================
+// ========== GENERICS ==========
+// ==============================
+
+// Generic Functions
+func generic_function[T int | string, U any](param1 T, param2 U) { // generic function declaration, takes one or more type parameters that can be used as regular types in the function parameters and return type and inside the funciton, the type parameters can be 'any' or a list of types separated by |
+	var variable T // the type parameter can be used for any purpose as a regular type
+	fmt.Print(param2)
+}
+generic_function[int, string](10, "hello") // generic function call, type parameters must each be one of the types specified in the function declaration, unless its 'any'
+generic_function(10, "hello") // generic function call with type inference, the type parameters can be ommited if they can be inferred from the types of the arguments passed to the function
+
+// Generic Structs
+type GenericStruct[T int | string, U any] struct { // generic struct declaration, similar to generic function declaration
+	field1 T // field declaration a generic type parameter
+	field2 U
+}
+GenericStruct[int, string]{10, "hello"} // generic struct literal declaration, type parameters must each be one of the types specified in the struct declaration, unless its 'any'
